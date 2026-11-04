@@ -20,7 +20,7 @@ test.describe('measurements at 1440', () => {
 
   test('match the spec', async ({ page }) => {
     await loadReady(page);
-    const logo = await page.locator('header img').boundingBox();
+    const logo = await page.locator('header img').first().boundingBox();
     expect(logo).toEqual({ x: 170, y: 32, width: 224, height: 60 });
     const h1 = await page.locator('h1').boundingBox();
     expect(h1?.y).toBe(265);
@@ -39,7 +39,7 @@ test.describe('measurements at 390', () => {
 
   test('match the spec', async ({ page }) => {
     await loadReady(page);
-    const logo = await page.locator('header img').boundingBox();
+    const logo = await page.locator('header img').first().boundingBox();
     expect(Math.round(logo!.width)).toBe(164);
     expect(logo!.height).toBe(44);
     const height = await page.evaluate(() => document.documentElement.scrollHeight);
@@ -129,7 +129,7 @@ test.describe('anchors and stubs', () => {
     await expect
       .poll(async () => (await page.locator('header').boundingBox())?.y)
       .toBe(0);
-    await expect(page.locator('header img')).toHaveCSS('height', '44px');
+    await expect(page.locator('header img').first()).toHaveCSS('height', '44px');
   });
 
   test('logo returns to the top', async ({ page }) => {

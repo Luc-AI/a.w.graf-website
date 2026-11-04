@@ -1,16 +1,15 @@
 /* Tokens and base styles of Design 2. Scoped, so Design 1 stays untouched.
    The clamp values map exactly to the artboard at 1280; don't round them. */
 .theme {
-  --bg: #f6f3ec;
-  --tile: #ece7dc;
+  --tile: color-mix(in srgb, var(--bg) 94.5%, var(--ink));
   --ink: #171715;
-  --on-dark: #f6f3ec;
+  --on-dark: var(--bg);
   --hero-fallback: #2a2a27;
   --on-dark-60: rgba(246, 243, 236, 0.6);
   --on-dark-65: rgba(246, 243, 236, 0.65);
   --on-dark-rule: rgba(246, 243, 236, 0.12);
-  --sans: var(--font-inter), system-ui, sans-serif;
-  --serif: var(--font-newsreader), Georgia, serif;
+  --sans: var(--font-sans);
+  --serif: var(--font-serif);
 
   --max: 1280px;
   --sec-y: clamp(88px, 10.9375vw, 140px);
@@ -46,7 +45,7 @@
 }
 
 .darkBand {
-  background: var(--ink);
+  background: var(--accent);
 }
 
 .eyebrow {
@@ -58,8 +57,11 @@
 /* The 1.6 line-height is inherited in the design and sets the vertical rhythm. */
 .h2 {
   font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(36px, 4.0625vw, 52px);
+  font-stretch: var(--heading-stretch, 100%);
+  text-transform: var(--heading-transform, none);
+  letter-spacing: var(--heading-tracking, normal);
+  font-weight: var(--heading-weight, 400);
+  font-size: calc(clamp(36px, 4.0625vw, 52px) * var(--heading-scale, 1));
   line-height: 1.6;
   margin: 0;
 }

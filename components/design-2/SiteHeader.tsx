@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { contactDetails, designTwo } from '@/content';
+import { Logo } from '../Logo';
 import styles from './SiteHeader.module.css';
 
 const { nav, top } = designTwo;
@@ -42,7 +43,7 @@ export function SiteHeader() {
     <>
       <div className={`${styles.bar} ${open ? styles.open : ''}`}>
         <a className={`hit ${styles.logo}`} href={top.href} aria-label={top.label}>
-          <img src="/images/aw-graf-logo-white.png" width={896} height={240} alt="" />
+          <Logo tone="white" alt="" />
         </a>
         <nav className={styles.nav} aria-label={nav.label}>
           {nav.links.map((link) => (

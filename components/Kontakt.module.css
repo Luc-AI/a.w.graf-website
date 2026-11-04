@@ -1,5 +1,5 @@
 .kontakt {
-  background: var(--ink);
+  background: var(--accent);
   color: var(--bg);
 }
 
@@ -36,6 +36,11 @@
 
 .link {
   text-decoration: underline;
+}
+
+/* The accent underline would vanish on the accent surface. */
+.kontakt a:hover {
+  text-decoration-color: currentColor;
 }
 
 @media (max-width: 767px) {

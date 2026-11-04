@@ -1,0 +1,78 @@
+/* Design Lab mapping. components/design-lab/options.ts is the source of truth; keep in sync by hand.
+   Defaults (current, newsreader, inter, ink, cream) need no rule. */
+
+html[data-heading='eb-garamond'] {
+  --font-serif: 'EB Garamond', Georgia, serif;
+  --heading-weight: 500;
+}
+
+html[data-heading='cormorant-sc'] {
+  --font-serif: 'Cormorant SC', Georgia, serif;
+  --heading-weight: 600;
+  --heading-scale: 1.06;
+}
+
+html[data-heading='playfair'] {
+  --font-serif: 'Playfair Display', Georgia, serif;
+}
+
+html[data-heading='fraunces'] {
+  --font-serif: 'Fraunces', Georgia, serif;
+}
+
+html[data-heading='archivo'] {
+  --font-serif: 'Archivo', system-ui, sans-serif;
+  --heading-weight: 500;
+  --heading-stretch: 125%;
+  --heading-transform: uppercase;
+  --heading-tracking: 0.04em;
+  --heading-scale: 0.72;
+}
+
+html[data-body='hanken'] {
+  --font-sans: 'Hanken Grotesk', system-ui, sans-serif;
+}
+
+html[data-body='source-serif'] {
+  --font-sans: 'Source Serif 4', Georgia, serif;
+}
+
+html[data-body='dm-sans'] {
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+}
+
+html[data-accent='racing'] {
+  --accent: #0A3D2E;
+}
+
+html[data-accent='forest'] {
+  --accent: #004225;
+}
+
+html[data-accent='moss'] {
+  --accent: #2E6B58;
+}
+
+html[data-accent='slate'] {
+  --accent: #1F2933;
+}
+
+html[data-accent='deep-stone'] {
+  --accent: #6B624F;
+}
+
+html[data-bg='bone'] {
+  --bg: #F3F0E8;
+}
+
+html[data-bg='parchment'] {
+  --bg: #F3EFE7;
+}
+
+html[data-bg='greige'] {
+  --bg: #E6E2D9;
+}
+
+html[data-bg='white'] {
+  --bg: #FFFFFF;
+}

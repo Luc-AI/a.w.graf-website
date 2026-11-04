@@ -1,0 +1,36 @@
+.wrap {
+  display: inline-flex;
+  height: 100%;
+}
+
+.img {
+  display: none;
+  height: 100%;
+  width: auto;
+}
+
+/* Default variant, unless another one is chosen. */
+:global(html:not([data-logo])) .img[data-variant='current'],
+:global(html[data-logo='current']) .img[data-variant='current'] {
+  display: block;
+}
+
+:global(html[data-logo='a']) .img[data-variant='a'] {
+  display: block;
+}
+
+:global(html[data-logo='b']) .img[data-variant='b'] {
+  display: block;
+}
+
+:global(html[data-logo='c']) .img[data-variant='c'] {
+  display: block;
+}
+
+:global(html[data-logo='d']) .img[data-variant='d'] {
+  display: block;
+}
+
+:global(html[data-logo='original']) .img[data-variant='original'] {
+  display: block;
+}

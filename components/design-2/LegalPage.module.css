@@ -11,12 +11,11 @@
 
 .logo {
   display: inline-block;
+  line-height: 0;
 }
 
-.logo img {
+.logo > span {
   height: 44px;
-  width: auto;
-  display: block;
 }
 
 .main {

@@ -41,10 +41,12 @@
   margin: 0;
   color: var(--on-dark);
   font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(56px, 10.3125vw, 132px);
+  font-stretch: var(--heading-stretch, 100%);
+  text-transform: var(--heading-transform, none);
+  font-weight: var(--heading-weight, 400);
+  font-size: calc(clamp(56px, 10.3125vw, 132px) * var(--heading-scale, 1));
   line-height: 0.95;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--heading-tracking, -0.02em);
 }
 
 @media (max-width: 767px) {

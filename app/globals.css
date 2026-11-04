@@ -2,6 +2,7 @@
   /* colour */
   --bg: #f6f3ec;
   --ink: #171715;
+  --accent: var(--ink);
   --ink-60: rgba(23, 23, 21, 0.6);
   --rule: rgba(23, 23, 21, 0.15);
   --rule-header: rgba(23, 23, 21, 0.12);
@@ -36,7 +37,7 @@ body {
 }
 
 ::selection {
-  background: var(--ink);
+  background: var(--accent);
   color: var(--bg);
 }
 
@@ -47,6 +48,7 @@ a {
 }
 
 a:hover {
+  text-decoration-color: var(--accent);
   text-decoration-thickness: 2px;
 }
 
@@ -69,10 +71,12 @@ section[id] {
 
 .h2 {
   font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: clamp(34px, 4vw, 48px);
+  font-stretch: var(--heading-stretch, 100%);
+  text-transform: var(--heading-transform, none);
+  font-weight: var(--heading-weight, 400);
+  font-size: calc(clamp(34px, 4vw, 48px) * var(--heading-scale, 1));
   line-height: 1.1;
-  letter-spacing: -0.01em;
+  letter-spacing: var(--heading-tracking, -0.01em);
   margin: 0;
 }
 

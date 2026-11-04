@@ -61,7 +61,7 @@ test.describe('spot checks at 1280', () => {
 
   test('match the spec', async ({ page }) => {
     await loadReady(page, PATH);
-    const logo = (await page.locator('header img[src*="logo"]').boundingBox())!;
+    const logo = (await page.locator('header img[src*="logo"]').first().boundingBox())!;
     expect([logo.x, logo.y, Math.round(logo.width), logo.height]).toEqual([44, 28, 209, 56]);
     expect(Math.round((await page.locator('h1').boundingBox())!.y)).toBe(493);
     expect((await page.locator('header#top').boundingBox())!.height).toBe(800);
@@ -75,7 +75,7 @@ test.describe('spot checks at 390', () => {
 
   test('match the spec', async ({ page }) => {
     await loadReady(page, PATH);
-    const logo = (await page.locator('header img[src*="logo"]').boundingBox())!;
+    const logo = (await page.locator('header img[src*="logo"]').first().boundingBox())!;
     expect([logo.x, logo.y, Math.round(logo.width), logo.height]).toEqual([24, 20, 149, 40]);
     expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(4113);
   });
@@ -191,7 +191,7 @@ test.describe('keyboard and network', () => {
     await expect(page.locator('h1')).toHaveText('Impressum');
     await expect(page.locator('main')).toContainText('Inhalt folgt.');
     await expect(page.locator('footer')).toBeVisible();
-    await expect(page.locator('header img')).toHaveCSS('height', '44px');
+    await expect(page.locator('header img').first()).toHaveCSS('height', '44px');
     await page.locator('header a').click();
     await expect(page).toHaveURL(/\/design-2$/);
   });

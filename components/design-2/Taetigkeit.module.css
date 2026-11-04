@@ -28,8 +28,11 @@
 
 .tileTitle {
   font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(30px, 3.125vw, 40px);
+  font-stretch: var(--heading-stretch, 100%);
+  text-transform: var(--heading-transform, none);
+  letter-spacing: var(--heading-tracking, normal);
+  font-weight: var(--heading-weight, 400);
+  font-size: calc(clamp(30px, 3.125vw, 40px) * var(--heading-scale, 1));
   line-height: 1.6;
   margin: 0;
 }

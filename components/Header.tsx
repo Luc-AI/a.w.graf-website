@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { contactDetails, nav, site } from '@/content';
+import { Logo } from './Logo';
 import styles from './Header.module.css';
 
 const SCROLL_THRESHOLD = 40;
@@ -91,13 +92,7 @@ export function Header() {
       <div ref={wrapRef} className={styles.wrap}>
         <header className={`container ${styles.header}`}>
           <a href={nav.home.href} aria-label={nav.home.label} className={`hit ${styles.logoLink}`}>
-            <img
-              className={styles.logo}
-              src="/images/aw-graf-logo-dark.png"
-              alt={site.logoAlt}
-              width={896}
-              height={240}
-            />
+            <Logo tone="dark" alt={site.logoAlt} className={styles.logo} />
           </a>
           <nav className={styles.desktopNav} aria-label={nav.label}>
             {nav.links.map((link) => (

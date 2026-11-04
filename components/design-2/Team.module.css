@@ -43,7 +43,9 @@
 
 .lead {
   font-family: var(--serif);
-  font-size: clamp(21px, 2.03125vw, 26px);
+  font-weight: var(--heading-weight, 400);
+  font-stretch: var(--heading-stretch, 100%);
+  font-size: calc(clamp(21px, 2.03125vw, 26px) * var(--heading-scale, 1));
   line-height: 1.6;
   margin: 0;
   text-wrap: pretty;

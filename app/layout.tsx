@@ -3,6 +3,10 @@ import type { ReactNode } from 'react';
 import { site } from '@/content';
 import { inter, newsreader } from './fonts';
 import './globals.css';
+import './design-lab-fonts.css';
+import './design-lab.css';
+import DesignLab from '@/components/design-lab/DesignLab';
+import { designLabInitScript } from '@/components/design-lab/init-script';
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
@@ -32,7 +36,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="de-CH" className={`${inter.variable} ${newsreader.variable}`}>
-      <body>{children}</body>
+      <body>
+        <script dangerouslySetInnerHTML={{ __html: designLabInitScript }} />
+        {children}
+        <DesignLab />
+      </body>
     </html>
   );
 }
