@@ -1,0 +1,138 @@
+:root {
+  /* colour */
+  --bg: #f6f3ec;
+  --ink: #171715;
+  --ink-60: rgba(23, 23, 21, 0.6);
+  --rule: rgba(23, 23, 21, 0.15);
+  --rule-header: rgba(23, 23, 21, 0.12);
+  --placeholder: rgba(23, 23, 21, 0.05);
+  --on-dark-60: rgba(246, 243, 236, 0.6);
+
+  /* type */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), Georgia, serif;
+
+  /* layout */
+  --container: 1228px;
+  --gutter: clamp(24px, 5vw, 64px);
+  --section-y: clamp(112px, 14vw, 140px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font: 400 18px/1.6 var(--font-sans);
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+section[id] {
+  scroll-margin-top: 96px;
+}
+
+/* Shared layout primitives */
+
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(34px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.h2-narrow {
+  max-width: 12ch;
+}
+
+.body-text {
+  margin: 0;
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+
+/* The wrap point is part of the design: no breakpoints here. */
+.two-col {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 64px;
+}
+
+.two-col-head {
+  flex: 1 1 300px;
+}
+
+.two-col-body {
+  flex: 1.6 1 420px;
+}
+
+.section-pad-top {
+  padding-top: var(--section-y);
+}
+
+.divider-line {
+  height: 1px;
+  background: var(--rule);
+}
+
+/* Extends the tap area to 44px tall without changing the visible layout. */
+.hit {
+  position: relative;
+}
+
+.hit::after {
+  content: '';
+  position: absolute;
+  inset: calc(50% - 22px) 0;
+}
+
+@media (max-width: 767px) {
+  section[id] {
+    scroll-margin-top: 72px;
+  }
+
+  body.menu-open {
+    overflow: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

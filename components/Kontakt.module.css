@@ -1,0 +1,46 @@
+.kontakt {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.inner {
+  padding-block: var(--section-y);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-top: 6px;
+}
+
+.intro {
+  margin: 0;
+  max-width: 60ch;
+}
+
+.details {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(80px, 140px) minmax(0, 1fr);
+  gap: 12px 32px;
+}
+
+.details dt {
+  color: var(--on-dark-60);
+}
+
+.details dd {
+  margin: 0;
+}
+
+.link {
+  text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+  .details {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 12px 20px;
+  }
+}

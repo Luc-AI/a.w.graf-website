@@ -1,0 +1,28 @@
+{
+  "name": "aw-graf-website",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "serve out -l 3100",
+    "typecheck": "tsc --noEmit",
+    "test": "playwright test",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "pretest": "next build"
+  },
+  "dependencies": {
+    "next": "^16.4.5",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "lighthouse": "^13.6.0",
+    "serve": "^14.2.6",
+    "typescript": "^7.0.2"
+  }
+}
