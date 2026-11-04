@@ -1,23 +1,17 @@
-import { Divider } from '@/components/Divider';
-import { Hero } from '@/components/Hero';
-import { Kontakt } from '@/components/Kontakt';
-import { Taetigkeit } from '@/components/Taetigkeit';
-import { Team } from '@/components/Team';
-import { UeberUns } from '@/components/UeberUns';
-import { Werte } from '@/components/Werte';
+import { chooser } from '@/content';
+import styles from './chooser.module.css';
 
-export default function HomePage() {
+export default function ChooserPage() {
   return (
-    <>
-      <Hero />
-      <UeberUns />
-      <Divider />
-      <Taetigkeit />
-      <Divider />
-      <Werte />
-      <Divider flush />
-      <Team />
-      <Kontakt />
-    </>
+    <main className={styles.page}>
+      <h1 className={styles.title}>{chooser.title}</h1>
+      <div className={styles.options}>
+        {chooser.options.map((option) => (
+          <a href={option.href} className={styles.option} key={option.href}>
+            {option.label}
+          </a>
+        ))}
+      </div>
+    </main>
   );
 }

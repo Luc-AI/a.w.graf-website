@@ -15,7 +15,7 @@ const chrome = await chromeLauncher.launch({
 
 let failed = false;
 try {
-  const result = await lighthouse('http://localhost:3101/', {
+  const result = await lighthouse('http://localhost:3101/design-1', {
     port: chrome.port,
     output: 'html',
     logLevel: 'error',

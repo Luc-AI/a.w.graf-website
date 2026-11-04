@@ -96,6 +96,31 @@ test.describe('mobile menu behaviour', () => {
   });
 });
 
+test.describe('design chooser', () => {
+  test('shows both designs; Design 1 opens the site', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('main a')).toHaveText(['Design 1', 'Design 2']);
+    await page.getByRole('link', { name: 'Design 1' }).click();
+    await expect(page).toHaveURL(/\/design-1$/);
+    await expect(page.locator('h1')).toHaveText('Immobilien mit Bestand.');
+  });
+
+  test('Design 2 opens its placeholder and links back', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('link', { name: 'Design 2' }).click();
+    await expect(page).toHaveURL(/\/design-2$/);
+    await page.getByRole('link', { name: 'Zurück zur Auswahl' }).click();
+    await expect(page.locator('h1')).toHaveText('Design wählen');
+  });
+
+  test('legal page nav returns to Design 1', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/impressum');
+    await page.getByRole('link', { name: 'Kontakt' }).click();
+    await expect(page).toHaveURL(/\/design-1#kontakt$/);
+  });
+});
+
 test.describe('anchors and stubs', () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 

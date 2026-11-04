@@ -30,13 +30,13 @@ export const nav = {
   label: 'Hauptnavigation',
   menuOpen: 'Menü',
   menuClose: 'Schliessen',
-  home: { href: '/#top', label: 'A.W. Graf AG' },
+  home: { href: '/design-1#top', label: 'A.W. Graf AG' },
   links: [
-    { href: '/#ueber-uns', label: 'Über uns' },
-    { href: '/#taetigkeit', label: 'Tätigkeit' },
-    { href: '/#werte', label: 'Werte' },
-    { href: '/#team', label: 'Team' },
-    { href: '/#kontakt', label: 'Kontakt' },
+    { href: '/design-1#ueber-uns', label: 'Über uns' },
+    { href: '/design-1#taetigkeit', label: 'Tätigkeit' },
+    { href: '/design-1#werte', label: 'Werte' },
+    { href: '/design-1#team', label: 'Team' },
+    { href: '/design-1#kontakt', label: 'Kontakt' },
   ],
 };
 
@@ -111,4 +111,18 @@ export const footer = {
 export const legalPages = {
   impressum: { title: 'Impressum', body: 'Inhalt folgt.' },
   datenschutz: { title: 'Datenschutz', body: 'Inhalt folgt.' },
+};
+
+export const chooser = {
+  title: 'Design wählen',
+  options: [
+    { href: '/design-1', label: 'Design 1' },
+    { href: '/design-2', label: 'Design 2' },
+  ],
+};
+
+export const designTwo = {
+  title: 'Design 2',
+  body: 'Inhalt folgt.',
+  back: { href: '/', label: 'Zurück zur Auswahl' },
 };

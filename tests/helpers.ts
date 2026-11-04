@@ -1,7 +1,7 @@
 import type { Page } from '@playwright/test';
 
 /** Loads the page with fonts and all (also lazy) images ready, scrolled back to the top. */
-export async function loadReady(page: Page, path = '/') {
+export async function loadReady(page: Page, path = '/design-1') {
   await page.goto(path, { waitUntil: 'networkidle' });
   await page.evaluate(async () => {
     window.scrollTo(0, document.documentElement.scrollHeight);
