@@ -1,0 +1,65 @@
+.work {
+  display: grid;
+  min-height: clamp(506px, 56.25vw, 720px);
+  margin-bottom: var(--sec);
+  grid-template-columns: calc(var(--edge) + var(--pad)) min(296px, 23.125vw) min(224px, 17.5vw) 1fr;
+  grid-template-rows: var(--off-80) auto 1fr;
+}
+
+.photo {
+  grid-column: 3 / -1;
+  grid-row: 1 / -1;
+  background: var(--img-placeholder);
+  position: relative;
+}
+
+.card {
+  grid-column: 2 / 4;
+  grid-row: 2;
+  position: relative;
+  background: var(--tile);
+  padding: var(--card-pad);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* 1.6 is inherited in the design and sets the spacing. */
+.title {
+  font-size: var(--h2);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-weight: 500;
+}
+
+@media (max-width: 899px) {
+  .work {
+    display: block;
+    min-height: 0;
+  }
+
+  .photo {
+    margin-left: var(--pad);
+    aspect-ratio: 4 / 3;
+  }
+
+  .card {
+    margin: -64px var(--pad) 0 0;
+    max-width: 640px;
+    padding: 40px var(--pad);
+    gap: 24px;
+  }
+
+  .title {
+    line-height: 1.2;
+  }
+}

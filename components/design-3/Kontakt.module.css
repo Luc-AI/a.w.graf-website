@@ -1,0 +1,52 @@
+.band {
+  background: var(--accent);
+  color: var(--on-dark);
+}
+
+.contact {
+  padding: var(--sec-120) var(--pad) 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+/* 1.6 is inherited in the design and sets the spacing. */
+.title {
+  grid-column: 1 / span 5;
+  font-size: var(--h2);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.details {
+  grid-column: 7 / span 6;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 12px 24px;
+}
+
+.details dt {
+  color: var(--on-dark-60);
+}
+
+.details dd {
+  margin: 0;
+}
+
+@media (max-width: 899px) {
+  .contact {
+    gap: 56px;
+  }
+
+  .title {
+    grid-column: 1;
+    line-height: 1.2;
+  }
+
+  .details {
+    grid-column: 1;
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 12px 16px;
+  }
+}

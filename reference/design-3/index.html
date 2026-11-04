@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<!--
+  RESPONSIVE REFERENCE for variant "2c Textfeld im Bild" (AW Graf Layout-Richtungen, Claude Design).
+  At a 1280px viewport this renders identically to original-artboard.html (the fixed-width design).
+  The overlaps are built with CSS grid (not absolute positioning) so the cards can grow with their text.
+  Everything below 1280px is the responsive spec, see HANDOVER.md §5. Do not ship as-is; port it.
+-->
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A.W. Graf AG</title>
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/inter-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/inter-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Newsreader';font-style:normal;font-weight:200 800;font-display:swap;src:url(fonts/newsreader-latin-opsz-normal.woff2) format('woff2')}
+
+:root{
+  --bg:#F6F3EC; --tile:#ECE7DC; --ink:#171715; --img-fallback:#2a2a27; --img-placeholder:#ccc;
+  --rule:rgba(23,23,21,0.15); --on-dark-60:rgba(246,243,236,0.6); --on-dark-rule:rgba(246,243,236,0.2);
+  --sans:'Inter', system-ui, sans-serif; --serif:'Newsreader', Georgia, serif;
+  --max:1280px;
+  --pad:clamp(24px,5vw,64px);              /* 64 @1280 */
+  --sec:clamp(88px,10.9375vw,140px);       /* 140 @1280 */
+  --sec-120:clamp(72px,9.375vw,120px);     /* 120 @1280 */
+  --off-80:clamp(48px,6.25vw,80px);        /* 80 @1280 */
+  --gap-12col:clamp(16px,2.5vw,32px);      /* 32 @1280 */
+  --card-pad:clamp(32px,3.75vw,48px);      /* 48 @1280 */
+  --h2:clamp(34px,3.4375vw,44px);          /* 44 @1280 */
+  /* distance from viewport edge to the 1280 artboard edge (0 up to 1280) */
+  --edge:max(0px, (100vw - var(--max)) / 2);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;overflow-x:clip}
+a{color:inherit;text-decoration:none}
+a:hover{color:inherit;text-decoration:underline;text-underline-offset:4px}
+:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+img{display:block}
+.wrap{max-width:var(--max);margin:0 auto}
+.serif{font-family:var(--serif);font-weight:400}
+.eyebrow{font-size:13px;letter-spacing:0.18em;text-transform:uppercase}
+.cover{width:100%;height:100%;object-fit:cover;object-position:center}
+section[id]{scroll-margin-top:24px}
+
+/* ---------- Header (over the hero photo) ---------- */
+.site-header{position:absolute;top:0;left:0;right:0;z-index:30}
+.site-header .bar{max-width:var(--max);margin:0 auto;padding:32px var(--pad);display:flex;justify-content:space-between;align-items:center;color:#F6F3EC}
+.site-header .logo img{height:60px;width:auto}
+.site-header nav{display:flex;gap:28px;font-size:16px;align-items:center}
+.boxed{border:1px solid rgba(246,243,236,0.7);padding:4px 14px;margin:-5px 0}
+.menu-btn{display:none;font:inherit;font-size:16px;color:inherit;background:none;cursor:pointer;line-height:1.6;position:relative}
+.menu-btn::after{content:"";position:absolute;inset:-8px -4px}  /* 44px hit area */
+
+/* ---------- Hero: photo + overlapping light card ---------- */
+.hero{position:relative;display:grid;min-height:clamp(680px,68.75vw,880px);
+  grid-template-columns:calc(var(--edge) + var(--pad)) min(640px,max(440px,50vw)) 1fr;
+  grid-template-rows:1fr auto clamp(80px,9.375vw,120px)}
+.hero-photo{grid-column:1 / -1;grid-row:1 / 3;position:relative;background:var(--img-fallback);overflow:hidden}
+.hero-photo img{position:absolute;inset:0}
+.hero-photo::after{content:"";position:absolute;inset:0 0 auto 0;height:180px;background:linear-gradient(180deg,rgba(0,0,0,0.4),rgba(0,0,0,0))}
+.hero-card{grid-column:2;grid-row:2 / 4;position:relative;background:var(--bg);padding:clamp(36px,4.375vw,56px) clamp(32px,4.375vw,56px) clamp(32px,3.75vw,48px);display:flex;flex-direction:column;gap:28px}
+.hero-card h1{font-size:clamp(44px,5.625vw,72px);line-height:1.02;letter-spacing:-0.015em;margin:0}
+.hero-card p{margin:0}
+.cta{align-self:flex-start;display:inline-flex;align-items:center;gap:0.3em;border-bottom:1px solid var(--ink);padding-bottom:4px}
+.cta:hover{text-decoration:none}
+.cta svg{width:1em;height:1em}
+
+/* ---------- 12-col text blocks ---------- */
+.cols{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap-12col)}
+.about{padding:var(--sec-120) var(--pad) var(--sec)}
+.about h2,.values h2{grid-column:1 / span 4;font-size:var(--h2);line-height:1.1;margin:0}
+.about .text{grid-column:6 / span 7;display:flex;flex-direction:column;gap:20px}
+.about p{margin:0}
+
+/* ---------- Tätigkeit: image right, tile card overlapping left ---------- */
+.work{display:grid;min-height:clamp(506px,56.25vw,720px);margin-bottom:var(--sec);
+  grid-template-columns:calc(var(--edge) + var(--pad)) min(296px,23.125vw) min(224px,17.5vw) 1fr;
+  grid-template-rows:var(--off-80) auto 1fr}
+.work-img{grid-column:3 / -1;grid-row:1 / -1;background:var(--img-placeholder);position:relative}
+.work-img img{position:absolute;inset:0}
+.work-card{grid-column:2 / 4;grid-row:2;position:relative;background:var(--tile);padding:var(--card-pad);display:flex;flex-direction:column;gap:28px}
+.work-card h2{font-size:var(--h2);line-height:1.6;margin:0}   /* 1.6 inherited in the design */
+.work-card .item{display:flex;flex-direction:column;gap:8px}
+.work-card b,.values b{font-weight:500}
+
+/* ---------- Werte ---------- */
+.values{padding:0 var(--pad) var(--sec)}
+.values ul{grid-column:6 / span 7;list-style:none;margin:0;padding:0;border-bottom:1px solid var(--rule)}
+.values li{display:grid;grid-template-columns:180px minmax(0,1fr);gap:24px;padding:22px 0;border-top:1px solid var(--rule)}
+
+/* ---------- Team: image left, dark card overlapping right ---------- */
+.team{display:grid;min-height:clamp(478px,53.125vw,680px);
+  grid-template-columns:1fr min(184px,14.375vw) min(296px,23.125vw) calc(var(--edge) + var(--pad));
+  grid-template-rows:1fr auto var(--off-80)}
+.team-img{grid-column:1 / 3;grid-row:1 / -1;background:var(--img-placeholder);position:relative}
+.team-img img{position:absolute;inset:0}
+.team-card{grid-column:2 / 4;grid-row:2;position:relative;background:var(--ink);color:#F6F3EC;padding:var(--card-pad);display:flex;flex-direction:column;gap:20px}
+.team-card h2{margin:0;font:inherit;font-size:13px;letter-spacing:0.18em;text-transform:uppercase}
+.team-card p{font-family:var(--serif);font-size:clamp(19px,1.71875vw,22px);line-height:1.5;margin:0}
+
+/* ---------- Kontakt + footer (dark) ---------- */
+.dark{background:var(--ink);color:#F6F3EC}
+.contact{padding:var(--sec-120) var(--pad) 40px;display:flex;flex-direction:column;gap:80px}
+.contact h2{grid-column:1 / span 5;font-size:var(--h2);line-height:1.6;margin:0}   /* 1.6 inherited */
+.contact dl{grid-column:7 / span 6;margin:0;display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px 24px}
+.contact dt{color:var(--on-dark-60)}
+.contact dd{margin:0}
+.site-footer{border-top:1px solid var(--on-dark-rule);padding-top:24px;display:flex;justify-content:space-between;gap:12px 24px;font-size:14px;color:var(--on-dark-60)}
+.site-footer nav{display:flex;gap:24px}
+
+/* ---------- Menu overlay (below 768) ---------- */
+.menu{position:fixed;inset:0;z-index:20;background:var(--ink);color:#F6F3EC;display:flex;flex-direction:column;justify-content:space-between;padding:120px 24px calc(40px + env(safe-area-inset-bottom));overflow-y:auto;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s}
+.menu-open .menu{opacity:1;visibility:visible}
+.menu-open .site-header{position:fixed}
+.menu ul{list-style:none;margin:0;padding:0}
+.menu li a{display:block;padding:8px 0;font-family:var(--serif);font-size:40px;line-height:1.1;letter-spacing:-0.01em}
+.menu .meta{display:flex;flex-direction:column;gap:4px;font-size:15px;color:var(--on-dark-60)}
+body.menu-open{overflow:hidden}
+
+/* ================= Stacked layout (below 900) ================= */
+@media (max-width:899px){
+  .hero,.work,.team{display:block;min-height:0}
+  .hero-photo{height:clamp(440px,75svh,640px)}
+  .hero-photo img{object-position:70% center}          /* keep the church in frame */
+  .hero-card{margin:-88px var(--pad) 0 0;max-width:640px;padding:40px var(--pad) 32px;gap:24px}
+  .about{padding-top:var(--sec)}
+  .cols{grid-template-columns:1fr;gap:24px}
+  .about h2,.about .text,.values h2,.values ul,.contact h2,.contact dl{grid-column:1}
+  .about h2,.values h2{max-width:14ch}
+  .work-img{margin-left:var(--pad);aspect-ratio:4/3}
+  .work-card{margin:-64px var(--pad) 0 0;max-width:640px;padding:40px var(--pad);gap:24px}
+  .values ul{margin-top:16px}
+  .values li{grid-template-columns:1fr;gap:4px}
+  .team-img{margin-right:var(--pad);aspect-ratio:5/4}
+  .team-card{margin:-64px 0 0 var(--pad);padding:40px var(--pad)}
+  .work-card h2,.contact h2{line-height:1.2}
+  .contact{gap:56px}
+  .contact dl{grid-template-columns:88px minmax(0,1fr);gap:12px 16px}
+}
+@media (max-width:767px){
+  .site-header .bar{padding:20px 24px}
+  .site-header .logo img{height:40px}
+  .site-header nav a{display:none}
+  .menu-btn{display:inline-block}
+  .site-footer{flex-direction:column;padding-bottom:env(safe-area-inset-bottom)}
+  .site-footer a{display:inline-block;padding:10px 0;margin:-10px 0}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="logo" href="#top" aria-label="A.W. Graf AG, zum Seitenanfang"><img src="assets/aw-graf-logo-white.png" alt="A.W. Graf AG – seit 1927"></a>
+    <nav aria-label="Hauptnavigation">
+      <a href="#ueber-uns">Über uns</a><a href="#taetigkeit">Tätigkeit</a><a href="#werte">Werte</a><a href="#team">Team</a><a class="boxed" href="#kontakt">Kontakt</a>
+      <button class="menu-btn boxed" type="button" aria-expanded="false" aria-controls="menu">Menü</button>
+    </nav>
+  </div>
+</header>
+
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menü">
+  <ul>
+    <li><a href="#ueber-uns">Über uns</a></li>
+    <li><a href="#taetigkeit">Tätigkeit</a></li>
+    <li><a href="#werte">Werte</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+  <div class="meta"><span>Im Riet 7, 8308 Illnau</span><a href="tel:+41523461377">052 346 13 77</a></div>
+</div>
+
+<main>
+<section class="hero" id="top">
+  <div class="hero-photo"><img class="cover" src="assets/cover_image.jpg" alt="Illnau mit Kirche, Luftaufnahme" fetchpriority="high"></div>
+  <div class="hero-card">
+    <h1 class="serif">Immobilien mit Bestand.</h1>
+    <p>Die A.W. Graf AG bewirtschaftet und entwickelt ihren eigenen Immobilienbestand in Illnau, mit Sorgfalt und mit langfristiger Perspektive.</p>
+    <a class="cta" href="#kontakt"><span>In Kontakt treten</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M2 8h11.5M9 3.5 13.5 8 9 12.5"/></svg></a>
+  </div>
+</section>
+
+<section class="wrap about cols" id="ueber-uns">
+  <h2 class="serif">Ein Unternehmen aus Illnau.</h2>
+  <div class="text">
+    <p>Die A.W. Graf AG ist eigentümergeführt und hat ihren Sitz in Illnau. Wir kümmern uns um unsere eigenen Liegenschaften: Wir vermieten sie, halten sie instand und entwickeln sie weiter.</p>
+    <p>Wir arbeiten nicht im Auftrag Dritter. Was wir betreuen, gehört uns, und wir haben vor, es zu behalten.</p>
+  </div>
+</section>
+
+<section class="work" id="taetigkeit">
+  <div class="work-img"><img class="cover" src="assets/dorf-im-tal.jpg" alt="Dorf im Tal" loading="lazy"></div>
+  <div class="work-card">
+    <h2 class="serif">Was wir tun.</h2>
+    <div class="item"><b>Bewirtschaftung</b><span>Wir betreuen und bewirtschaften unsere Liegenschaften selbst. Die Nähe zum eigenen Bestand erlaubt uns, auf Anliegen unserer Mieterinnen und Mieter direkt einzugehen und Mietverhältnisse zu pflegen, die über Jahrzehnte bestehen.</span></div>
+    <div class="item"><b>Entwicklung</b><span>Für uns heisst Entwicklung das Bestehende sorgfältig weiterzuführen. Dabei stehen der Ort und seine Menschen im Mittelpunkt. Neue Vorhaben messen wir stets daran, wie sie Illnau als Wohn- und Arbeitsort stärken.</span></div>
+  </div>
+</section>
+
+<section class="wrap values cols" id="werte">
+  <h2 class="serif">Wir denken in Generationen.</h2>
+  <ul>
+    <li><b>Kontinuität</b><span>Als inhabergeführtes Unternehmen denken wir über die eigene Generation hinaus.</span></li>
+    <li><b>Werterhalt</b><span>Wir investieren dort, wo es die Lebensdauer eines Gebäudes verlängert. Verpflichtungen gehen wir nur ein, wenn wir sie aus eigener Kraft tragen können.</span></li>
+    <li><b>Verantwortung</b><span>Was wir bauen, prägt das Ortsbild über lange Zeit. Wir beziehen Nachbarschaft und Gemeinde deshalb früh ein und arbeiten mit Betrieben aus der Region.</span></li>
+  </ul>
+</section>
+
+<section class="team" id="team">
+  <div class="team-img"><img class="cover" src="assets/team.png" alt="Das Team der A.W. Graf AG" loading="lazy"></div>
+  <div class="team-card">
+    <h2>Eigentümergeführt seit Generationen</h2>
+    <p>Die A.W. Graf AG, geführt von [Vorname Name] und [Vorname Name], betreut ihre eigenen Liegenschaften in Illnau persönlich und ist für Mieter, Partner und Handwerker direkt erreichbar.</p>
+  </div>
+</section>
+</main>
+
+<div class="dark" id="kontakt">
+  <div class="wrap contact">
+    <section class="cols" aria-label="Kontakt">
+      <h2 class="serif">A.W. Graf AG</h2>
+      <dl><dt>Adresse</dt><dd>Im Riet 7, 8308 Illnau</dd><dt>Telefon</dt><dd><a href="tel:+41523461377">052 346 13 77</a></dd><dt>E-Mail</dt><dd>[Platzhalter]</dd></dl>
+    </section>
+    <footer class="site-footer"><span>© A.W. Graf AG · Illnau</span><nav aria-label="Rechtliches"><a href="/impressum">Impressum</a><a href="/datenschutz">Datenschutz</a></nav></footer>
+  </div>
+</div>
+
+<script>
+(function(){
+  var b=document.querySelector('.menu-btn'),m=document.getElementById('menu'),body=document.body;
+  function set(o){body.classList.toggle('menu-open',o);b.setAttribute('aria-expanded',o);b.textContent=o?'Schliessen':'Menü';if(o){var f=m.querySelector('a');f&&f.focus({preventScroll:true})}else{b.focus({preventScroll:true})}}
+  b.addEventListener('click',function(){set(!body.classList.contains('menu-open'))});
+  m.addEventListener('click',function(e){if(e.target.closest('a'))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&body.classList.contains('menu-open'))set(false)});
+  window.addEventListener('resize',function(){if(innerWidth>=768&&body.classList.contains('menu-open'))set(false)});
+})();
+</script>
+</body>
+</html>

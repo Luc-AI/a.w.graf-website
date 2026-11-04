@@ -1,6 +1,6 @@
 # Design Lab (client preview tool)
 
-A floating panel that lets the client try logo, heading font, body font, accent colour and page background live on both designs. Remove it for go-live by deleting the `<DesignLab />` mount and the two CSS imports in `app/layout.tsx`.
+A floating panel that lets the client try logo, heading font, body font, accent colour and page background live on all designs. Remove it for go-live by deleting the `<DesignLab />` mount and the two CSS imports in `app/layout.tsx`.
 
 ## How state flows
 
@@ -11,7 +11,7 @@ A floating panel that lets the client try logo, heading font, body font, accent 
 
 ## Custom properties the site consumes
 
-Defined on `:root` in `app/globals.css` (Design 1) and inherited by Design 2 (`components/design-2/theme.module.css` must not redefine them):
+Defined on `:root` in `app/globals.css` (Design 1) and inherited by Designs 2 and 3 (their `theme.module.css` must not redefine them):
 
 | Property | Default | Used for |
 |---|---|---|

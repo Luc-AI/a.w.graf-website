@@ -118,6 +118,7 @@ export const chooser = {
   options: [
     { href: '/design-1', label: 'Design 1' },
     { href: '/design-2', label: 'Design 2' },
+    { href: '/design-3', label: 'Design 3' },
   ],
 };
 
@@ -170,6 +171,43 @@ export const designTwo = {
     links: [
       { href: '/design-2/impressum', label: 'Impressum' },
       { href: '/design-2/datenschutz', label: 'Datenschutz' },
+    ],
+  },
+};
+
+/** Design 3 ("Textfeld im Bild"). Shares most copy with the others, except the Über uns text. */
+export const designThree = {
+  home: { href: '/design-3', label: 'A.W. Graf AG, zur Startseite' },
+  top: { href: '#top', label: 'A.W. Graf AG, zum Seitenanfang' },
+  nav: {
+    label: 'Hauptnavigation',
+    menuOpen: 'Menü',
+    menuClose: 'Schliessen',
+    links: designTwo.nav.links,
+  },
+  hero: {
+    title: hero.title,
+    intro: hero.intro,
+    cta: hero.cta,
+    imageAlt: designTwo.hero.imageAlt,
+  },
+  ueberUns: {
+    title: ueberUns.title,
+    paragraphs: [
+      'Die A.W. Graf AG ist eigentümergeführt und hat ihren Sitz in Illnau. Wir kümmern uns um unsere eigenen Liegenschaften: Wir vermieten sie, halten sie instand und entwickeln sie weiter.',
+      ueberUns.paragraphs[1],
+    ],
+  },
+  taetigkeit: { ...taetigkeit, imageAlt: 'Dorf im Tal' },
+  werte,
+  team: designTwo.team,
+  kontakt: { title: kontakt.title, label: 'Kontakt', labels: kontakt.labels },
+  footer: {
+    copyright: designTwo.footer.copyright,
+    label: designTwo.footer.label,
+    links: [
+      { href: '/design-3/impressum', label: 'Impressum' },
+      { href: '/design-3/datenschutz', label: 'Datenschutz' },
     ],
   },
 };

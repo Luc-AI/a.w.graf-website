@@ -1,0 +1,147 @@
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+}
+
+.headerOpen {
+  position: fixed;
+}
+
+.bar {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 32px var(--pad);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--on-dark);
+}
+
+/* The default PNG has its transparent padding baked in; the design uses it like that.
+   Sized by height, because the Design Lab's logos have different aspect ratios. */
+.logo {
+  display: block;
+  line-height: 0;
+}
+
+.logo > span {
+  height: 60px;
+}
+
+/* This design keeps the default logo's padding: the shared shift would move it off the 64px frame. */
+.logo img[data-variant] {
+  transform: none;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+  font-size: 16px;
+  align-items: center;
+}
+
+.boxed {
+  border: 1px solid rgba(246, 243, 236, 0.7);
+  padding: 4px 14px;
+  margin: -5px 0;
+}
+
+.menuButton {
+  display: none;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.6;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+  position: relative;
+}
+
+/* 44px hit area */
+.menuButton::after {
+  content: '';
+  position: absolute;
+  inset: -8px -4px;
+}
+
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: var(--accent);
+  color: var(--on-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 120px 24px calc(40px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  /* Hidden only after the fade; visible at once on opening, so the first link can take focus. */
+  transition:
+    opacity 0.25s ease,
+    visibility 0s linear 0.25s;
+}
+
+.menuVisible {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.25s ease,
+    visibility 0s;
+}
+
+.menuList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menuLink {
+  display: block;
+  padding: 8px 0;
+  font-family: var(--serif);
+  font-weight: var(--heading-weight, 400);
+  font-stretch: var(--heading-stretch, 100%);
+  text-transform: var(--heading-transform, none);
+  font-size: calc(40px * var(--heading-scale, 1));
+  line-height: 1.1;
+  letter-spacing: var(--heading-tracking, -0.01em);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  font-size: 15px;
+  color: var(--on-dark-60);
+}
+
+@media (max-width: 767px) {
+  .bar {
+    padding: 20px 24px;
+  }
+
+  .logo > span {
+    height: 40px;
+  }
+
+  .nav a {
+    display: none;
+  }
+
+  .menuButton {
+    display: inline-block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu,
+  .menuVisible {
+    transition: none;
+  }
+}

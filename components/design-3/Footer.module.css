@@ -1,0 +1,21 @@
+.footer {
+  border-top: 1px solid var(--on-dark-rule);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px 24px;
+  font-size: 14px;
+  color: var(--on-dark-60);
+}
+
+.links {
+  display: flex;
+  gap: 24px;
+}
+
+@media (max-width: 767px) {
+  .footer {
+    flex-direction: column;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}

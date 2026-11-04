@@ -99,9 +99,9 @@ test.describe('mobile menu behaviour', () => {
 });
 
 test.describe('design chooser', () => {
-  test('shows both designs; Design 1 opens the site', async ({ page }) => {
+  test('shows all designs; Design 1 opens the site', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('main a')).toHaveText(['Design 1', 'Design 2']);
+    await expect(page.locator('main a')).toHaveText(['Design 1', 'Design 2', 'Design 3']);
     await page.getByRole('link', { name: 'Design 1' }).click();
     await expect(page).toHaveURL(/\/design-1$/);
     await expect(page.locator('h1')).toHaveText('Immobilien mit Bestand.');
@@ -112,6 +112,13 @@ test.describe('design chooser', () => {
     await page.getByRole('link', { name: 'Design 2' }).click();
     await expect(page).toHaveURL(/\/design-2$/);
     await expect(page.locator('h1')).toContainText('mit Bestand.');
+  });
+
+  test('Design 3 opens the third design', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('link', { name: 'Design 3' }).click();
+    await expect(page).toHaveURL(/\/design-3$/);
+    await expect(page.locator('h1')).toHaveText('Immobilien mit Bestand.');
   });
 
   test('legal page nav returns to Design 1', async ({ page }) => {
