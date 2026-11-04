@@ -126,6 +126,7 @@
     padding: 10px 0;
     font-family: var(--font-serif);
     font-weight: var(--heading-weight, 400);
+    color: var(--heading-color, currentColor);
     font-stretch: var(--heading-stretch, 100%);
     text-transform: var(--heading-transform, none);
     font-size: calc(28px * var(--heading-scale, 1));

@@ -27,6 +27,7 @@ export function Logo({
           alt={index === 0 ? alt : ''}
           aria-hidden={index === 0 ? undefined : true}
           loading={logo.id === DEFAULT_ID ? undefined : 'lazy'}
+          style={logo.scale ? { transform: `scale(${logo.scale})`, transformOrigin: 'left center' } : undefined}
         />
       ))}
     </span>

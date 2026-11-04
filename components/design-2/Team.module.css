@@ -47,6 +47,7 @@
 .lead {
   font-family: var(--serif);
   font-weight: var(--heading-weight, 400);
+  color: var(--heading-color, currentColor);
   font-stretch: var(--heading-stretch, 100%);
   font-size: calc(clamp(20px, 1.9vw, 24px) * var(--heading-scale, 1));
   line-height: 1.5;

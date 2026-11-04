@@ -90,6 +90,7 @@
   z-index: 20;
   background: var(--accent);
   color: var(--on-dark);
+  --heading-color: currentColor;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -118,6 +119,7 @@
   padding: 8px 0;
   font-family: var(--serif);
   font-weight: var(--heading-weight, 400);
+  color: var(--heading-color, currentColor);
   font-stretch: var(--heading-stretch, 100%);
   text-transform: var(--heading-transform, none);
   font-size: calc(30px * var(--heading-scale, 1));

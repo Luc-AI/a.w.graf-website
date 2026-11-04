@@ -1,4 +1,5 @@
 import { designTwo } from '@/content';
+import { LabPhotos } from '../LabPhotos';
 import { SiteHeader } from './SiteHeader';
 import styles from './Hero.module.css';
 
@@ -31,8 +32,10 @@ export function Hero() {
           height={1125}
           alt={hero.imageAlt}
           fetchPriority="high"
+          data-default-photo=""
         />
       </picture>
+      <LabPhotos className={styles.image} />
       <div className={styles.shade} />
       <div className={styles.inner}>
         <SiteHeader />

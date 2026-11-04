@@ -1,6 +1,7 @@
 .kontakt {
   background: var(--accent);
   color: var(--bg);
+  --heading-color: currentColor;
 }
 
 .inner {

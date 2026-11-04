@@ -33,6 +33,7 @@
   text-transform: var(--heading-transform, none);
   letter-spacing: var(--heading-tracking, normal);
   font-weight: var(--heading-weight, 400);
+  color: var(--heading-color, currentColor);
   font-size: calc(clamp(24px, 2.5vw, 32px) * var(--heading-scale, 1));
   line-height: 1.2;
   margin: 0;

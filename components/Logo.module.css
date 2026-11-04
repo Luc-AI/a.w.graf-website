@@ -39,3 +39,11 @@
 :global(html[data-logo='original']) .img[data-variant='original'] {
   display: block;
 }
+
+:global(html[data-logo='wordmark']) .img[data-variant='wordmark'] {
+  display: block;
+}
+
+:global(html[data-logo='house']) .img[data-variant='house'] {
+  display: block;
+}
