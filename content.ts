@@ -121,8 +121,61 @@ export const chooser = {
   ],
 };
 
+/** Design 2 ("Index-Kacheln"). Its copy differs from Design 1, so it is kept separately. */
 export const designTwo = {
-  title: 'Design 2',
-  body: 'Inhalt folgt.',
-  back: { href: '/', label: 'Zurück zur Auswahl' },
+  description: 'Die A.W. Graf AG ist eigentümergeführt und hat ihren Sitz in Illnau.',
+  home: { href: '/design-2', label: 'A.W. Graf AG, zur Startseite' },
+  top: { href: '#top', label: 'A.W. Graf AG, zum Seitenanfang' },
+  nav: {
+    label: 'Hauptnavigation',
+    menuLabel: 'Menü',
+    menuOpen: 'Menü öffnen',
+    menuClose: 'Menü schliessen',
+    links: [
+      { href: '#ueber-uns', label: 'Über uns' },
+      { href: '#taetigkeit', label: 'Tätigkeit' },
+      { href: '#werte', label: 'Werte' },
+      { href: '#team', label: 'Team' },
+    ],
+    menuLinks: [
+      { href: '#ueber-uns', label: 'Über uns' },
+      { href: '#taetigkeit', label: 'Tätigkeit' },
+      { href: '#werte', label: 'Werte' },
+      { href: '#team', label: 'Team' },
+      { href: '#kontakt', label: 'Kontakt' },
+    ],
+  },
+  hero: {
+    titleLines: ['Immobilien', 'mit Bestand.'],
+    imageAlt: 'Illnau mit Kirche, Luftaufnahme',
+  },
+  ueberUns: {
+    eyebrow: 'Über uns',
+    title: 'Ein Unternehmen aus Illnau.',
+    text: 'Die A.W. Graf AG ist eigentümergeführt und hat ihren Sitz in Illnau. Wir vermieten, unterhalten und entwickeln unseren eigenen Immobilienbestand mit Sorgfalt und langfristiger Perspektive. Wir arbeiten nicht im Auftrag Dritter: Was wir betreuen, gehört uns, und wir haben vor, es zu behalten.',
+    cta: { href: '#kontakt', label: 'In Kontakt treten' },
+  },
+  taetigkeit: {
+    eyebrow: 'Tätigkeit',
+    title: 'Was wir tun.',
+    tiles: taetigkeit.rows.map((row) => ({ title: row.label, text: row.text })),
+  },
+  werte: {
+    eyebrow: 'Werte',
+    title: 'Wir denken in Generationen.',
+    items: werte.rows,
+  },
+  team: {
+    eyebrow: team.eyebrow,
+    lead: team.lead,
+    imageAlt: 'Das Team der A.W. Graf AG',
+  },
+  footer: {
+    copyright: '© A.W. Graf AG · Illnau',
+    label: 'Rechtliches',
+    links: [
+      { href: '/design-2/impressum', label: 'Impressum' },
+      { href: '/design-2/datenschutz', label: 'Datenschutz' },
+    ],
+  },
 };

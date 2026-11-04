@@ -1,0 +1,59 @@
+.hero {
+  position: relative;
+  height: clamp(560px, 100svh, 800px);
+  background: var(--hero-fallback);
+  overflow: hidden;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.2) 30%,
+    rgba(0, 0, 0, 0.2) 45%,
+    rgba(0, 0, 0, 0.72) 100%
+  );
+}
+
+.inner {
+  position: relative;
+  height: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.title {
+  position: absolute;
+  left: var(--pad-44);
+  right: var(--pad-44);
+  bottom: 56px;
+  margin: 0;
+  color: var(--on-dark);
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(56px, 10.3125vw, 132px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 767px) {
+  .title {
+    bottom: 40px;
+  }
+
+  /* Keeps the church in frame. */
+  .image {
+    object-position: 70% center;
+  }
+}

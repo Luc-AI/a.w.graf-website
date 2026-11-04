@@ -39,11 +39,3 @@
   background: var(--ink);
   color: var(--bg);
 }
-
-.body {
-  margin: 0;
-}
-
-.back {
-  align-self: flex-start;
-}

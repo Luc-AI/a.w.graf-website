@@ -1,4 +1,5 @@
-// Lighthouse mobile run against the static build. Usage: npm run build && npm run lighthouse
+// Lighthouse mobile run against the static build.
+// Usage: npm run build && npm run lighthouse [-- /design-2]
 import { spawn } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
 import { chromium } from '@playwright/test';
@@ -15,7 +16,7 @@ const chrome = await chromeLauncher.launch({
 
 let failed = false;
 try {
-  const result = await lighthouse('http://localhost:3101/design-1', {
+  const result = await lighthouse(`http://localhost:3101${process.argv[2] ?? '/design-1'}`, {
     port: chrome.port,
     output: 'html',
     logLevel: 'error',

@@ -105,12 +105,11 @@ test.describe('design chooser', () => {
     await expect(page.locator('h1')).toHaveText('Immobilien mit Bestand.');
   });
 
-  test('Design 2 opens its placeholder and links back', async ({ page }) => {
+  test('Design 2 opens the second design', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('link', { name: 'Design 2' }).click();
     await expect(page).toHaveURL(/\/design-2$/);
-    await page.getByRole('link', { name: 'Zurück zur Auswahl' }).click();
-    await expect(page.locator('h1')).toHaveText('Design wählen');
+    await expect(page.locator('h1')).toContainText('mit Bestand.');
   });
 
   test('legal page nav returns to Design 1', async ({ page }) => {
