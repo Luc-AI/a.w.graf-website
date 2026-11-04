@@ -178,3 +178,10 @@ test.describe('anchors and stubs', () => {
     expect(external).toEqual([]);
   });
 });
+
+test('the footer reaches the bottom of the window on short pages', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 1000 });
+  await page.goto('/impressum');
+  const footer = (await page.locator('footer').boundingBox())!;
+  expect(footer.y + footer.height).toBe(1000);
+});

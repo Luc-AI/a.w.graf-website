@@ -62,6 +62,18 @@ section[id] {
 
 /* Shared layout primitives */
 
+/* Keeps the dark footer at the bottom of the window on short pages. */
+.site-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+.site-shell > main {
+  flex: 1;
+  min-width: 0;
+}
+
 .container {
   max-width: var(--container);
   margin-inline: auto;

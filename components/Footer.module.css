@@ -1,3 +1,7 @@
+.band {
+  background: var(--ink);
+}
+
 .footer {
   padding-top: 28px;
   padding-bottom: 36px;
@@ -6,7 +10,7 @@
   justify-content: space-between;
   gap: 12px 32px;
   font-size: 14px;
-  color: var(--ink-60);
+  color: var(--on-dark-60);
 }
 
 .links {
