@@ -1,4 +1,5 @@
 import { designThree } from '@/content';
+import { LabPhotos } from '../LabPhotos';
 import theme from './theme.module.css';
 import styles from './Hero.module.css';
 
@@ -32,8 +33,10 @@ export function Hero() {
             height={1125}
             alt={hero.imageAlt}
             fetchPriority="high"
+            data-default-photo=""
           />
         </picture>
+        <LabPhotos className={`${theme.cover} ${styles.image}`} />
       </div>
       <div className={styles.card}>
         <h1 className={`${theme.serif} ${styles.title}`}>{hero.title}</h1>

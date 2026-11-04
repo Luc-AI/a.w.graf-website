@@ -1,6 +1,6 @@
 # Design Lab (client preview tool)
 
-A floating panel that lets the client try logo, heading font, body font, heading colour, accent colour and page background live on all designs. Each colour group also takes a custom colour (native picker or hex field). It also swaps the hero photo on Designs 1 and 2. Remove it for go-live by deleting the `<DesignLab />` mount and the two CSS imports in `app/layout.tsx`, plus `<LabPhotos />` and `data-default-photo` in both `Hero.tsx` files, `components/LabPhotos.tsx` and `public/images/lab`.
+A floating panel that lets the client try logo, heading font, body font, heading colour, accent colour and page background live on all designs. Each colour group also takes a custom colour (native picker or hex field). It also swaps the hero photo on all three designs. Remove it for go-live by deleting the `<DesignLab />` mount and the two CSS imports in `app/layout.tsx`, plus `<LabPhotos />` and `data-default-photo` in the three `Hero.tsx` files (`components/Hero.tsx`, `components/design-2/Hero.tsx`, `components/design-3/Hero.tsx`), `components/LabPhotos.tsx` and `public/images/lab`.
 
 ## How state flows
 
@@ -20,7 +20,7 @@ Defined on `:root` in `app/globals.css` (Design 1) and inherited by Designs 2 an
 | `--bg` | `#f6f3ec` | page + header background |
 | `--accent` | `var(--ink)` | dark section backgrounds (Kontakt etc.), link hover underline colour, nav active state, anything that should carry the brand colour |
 
-Heading colour: every heading rule has `color: var(--heading-color, currentColor)`. Containers on a dark background (`Kontakt`, Design 2 `darkBand` and menu, chooser hover) set `--heading-color: currentColor` so their headings keep the light text colour.
+Heading colour: every heading rule has `color: var(--heading-color, currentColor)`. Containers on a dark background (`Kontakt`, Design 2 `darkBand` and menu, Design 3 `Kontakt`, chooser hover) set `--heading-color: currentColor` so their headings keep the light text colour.
 
 Heading-only modifiers. These are NOT defined on `:root`; every heading rule uses them with a fallback equal to its current value, e.g. `font-weight: var(--heading-weight, 400)`:
 
@@ -38,7 +38,7 @@ Heading-only modifiers. These are NOT defined on `:root`; every heading rule use
 
 ## Hero photo
 
-`components/LabPhotos.tsx` renders every photo from `options.ts` as a lazy, hidden `<img data-photo>`. Selectors in `app/design-lab.css` show the active one and hide the default (`img[data-default-photo]`). The photos come from Wikimedia Commons and are for the preview only: they show real buildings the company does not own, and each one requires the credit shown in the panel.
+`components/LabPhotos.tsx` renders every photo from `options.ts` as a lazy, hidden `<img data-photo>`. Chromium still fetches the smallest file of each hidden photo on page load, so the panel adds that weight to every page until it is removed. On Design 3 the swapped photo gets the hero's `theme.cover` and `styles.image` classes, so it fills the same box and the header gradient (`.photo::after`) stays above it. Selectors in `app/design-lab.css` show the active one and hide the default (`img[data-default-photo]`). The photos come from Wikimedia Commons and are for the preview only: they show real buildings the company does not own, and each one requires the credit shown in the panel.
 
 ## Fonts
 

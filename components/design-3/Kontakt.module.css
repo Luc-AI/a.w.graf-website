@@ -1,4 +1,5 @@
 .band {
+  --heading-color: currentColor;
   background: var(--accent);
   color: var(--on-dark);
 }

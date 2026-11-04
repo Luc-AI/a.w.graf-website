@@ -264,6 +264,63 @@ test.describe('Design Lab', () => {
     expect(await css('#top > div:nth-child(2)', 'background-color')).toBe('rgb(255, 255, 255)');
   });
 
+  test('the heading colour reaches light headings and spares dark ones', async ({ page }) => {
+    await page.goto(`${PATH}?title=forest`, { waitUntil: 'networkidle' });
+    const color = (selector: string) =>
+      page.locator(selector).first().evaluate((el) => getComputedStyle(el).color);
+    expect(await color('h1')).toBe('rgb(0, 66, 37)');
+    expect(await color('#ueber-uns h2')).toBe('rgb(0, 66, 37)');
+    expect(await color('#kontakt h2')).toBe('rgb(246, 243, 236)');
+  });
+
+  test('a custom hex accent and heading colour apply', async ({ page }) => {
+    await page.goto(`${PATH}?accent=%23004225&title=%23112233`, { waitUntil: 'networkidle' });
+    const css = (selector: string, property: string) =>
+      page.locator(selector).first().evaluate((el, p) => getComputedStyle(el).getPropertyValue(p), property);
+    expect(await css('#kontakt', 'background-color')).toBe('rgb(0, 66, 37)');
+    expect(await css('h1', 'color')).toBe('rgb(17, 34, 51)');
+    expect(await css('#kontakt h2', 'color')).toBe('rgb(246, 243, 236)');
+  });
+
+  for (const [name, width, height] of [['desktop', 1280, 900], ['phone', 390, 844]] as const) {
+    test(`the hero photo can be swapped (${name})`, async ({ page }) => {
+      await page.setViewportSize({ width, height });
+      await page.goto(`${PATH}?image=m2`, { waitUntil: 'networkidle' });
+      const photo = page.locator('#top img[data-photo="m2"]');
+      await expect(photo).toBeVisible();
+      await expect(page.locator('#top img[data-default-photo]')).toBeHidden();
+      await expect(page.locator('#top img[data-photo]:visible')).toHaveCount(1);
+      expect(await photo.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+      const box = await photo.boundingBox();
+      const hero = await page.locator('#top > div').first().boundingBox();
+      expect(Math.round(box!.width)).toBe(Math.round(hero!.width));
+      expect(Math.round(box!.height)).toBe(Math.round(hero!.height));
+      expect(await photo.evaluate((el) => getComputedStyle(el).objectFit)).toBe('cover');
+      // Stacked layouts keep the same crop as the default photo.
+      expect(await photo.evaluate((el) => getComputedStyle(el).objectPosition)).toBe(
+        width < 900 ? '70% 50%' : '50% 50%',
+      );
+      // Positioned and without a z-index, the photo paints below the later ::after gradient.
+      expect(await photo.evaluate((el) => getComputedStyle(el).zIndex)).toBe('auto');
+      const gradient = await page.locator('#top > div').first().evaluate((el) => {
+        const after = getComputedStyle(el, '::after');
+        return { position: after.position, zIndex: after.zIndex, height: after.height };
+      });
+      expect(gradient).toEqual({ position: 'absolute', zIndex: 'auto', height: '180px' });
+    });
+  }
+
+  test('the default page keeps the lab photos lazy and hidden', async ({ page }) => {
+    await page.goto(PATH, { waitUntil: 'networkidle' });
+    const photos = page.locator('#top img[data-photo]');
+    expect(await photos.count()).toBeGreaterThan(0);
+    for (const el of await photos.all()) {
+      await expect(el).toBeHidden();
+      expect(await el.getAttribute('loading')).toBe('lazy');
+    }
+    await expect(page.locator('#top img[data-default-photo]')).toBeVisible();
+  });
+
   test('its panel opens on this design and is gone with lab=off', async ({ page }) => {
     await page.goto(PATH, { waitUntil: 'networkidle' });
     const before = await page.locator('button:visible').count();

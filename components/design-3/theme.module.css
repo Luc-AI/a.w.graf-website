@@ -64,6 +64,7 @@
   text-transform: var(--heading-transform, none);
   letter-spacing: var(--heading-tracking, normal);
   font-weight: var(--heading-weight, 400);
+  color: var(--heading-color, currentColor);
 }
 
 /* Photos fill the track they share with a card, so a growing card can't overflow them. */
