@@ -5,10 +5,16 @@ import {
   accents,
   backgrounds,
   bodyFonts,
+  colorVars,
   DEFAULTS,
   headingFonts,
+  isCustomColor,
   logos,
+  photos,
   STORAGE_KEY,
+  titleColors,
+  type ColorGroup,
+  type ColorOption,
   type FontOption,
   type OptionGroup,
 } from './options';
@@ -16,11 +22,23 @@ import styles from './DesignLab.module.css';
 
 type State = Record<OptionGroup, string>;
 const KEYS = Object.keys(DEFAULTS) as OptionGroup[];
+const COLOR_LISTS: Record<ColorGroup, ColorOption[]> = { title: titleColors, accent: accents, bg: backgrounds };
+
+function cssVarOf(group: OptionGroup): string | undefined {
+  return (colorVars as Partial<Record<OptionGroup, string>>)[group];
+}
 
 function readFromDom(): State {
-  const ds = document.documentElement.dataset;
+  const root = document.documentElement;
   const next = { ...DEFAULTS };
-  for (const k of KEYS) next[k] = ds[k] ?? DEFAULTS[k];
+  for (const k of KEYS) {
+    const v = root.dataset[k] ?? DEFAULTS[k];
+    const cssVar = cssVarOf(k);
+    if (v === 'custom' && cssVar) {
+      const hex = root.style.getPropertyValue(cssVar).trim();
+      next[k] = isCustomColor(hex) ? hex : DEFAULTS[k];
+    } else next[k] = v;
+  }
   return next;
 }
 
@@ -28,6 +46,14 @@ function isLight(hex: string) {
   const n = parseInt(hex.slice(1), 16);
   const lum = 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255);
   return lum > 160;
+}
+
+/** Accepts "#abc", "abc", "#aabbcc", "aabbcc"; returns "#aabbcc" or null. */
+function normalizeHex(input: string): string | null {
+  const raw = input.trim().replace(/^#/, '');
+  if (/^[0-9a-fA-F]{3}$/.test(raw)) return `#${raw.split('').map((c) => c + c).join('')}`.toLowerCase();
+  if (/^[0-9a-fA-F]{6}$/.test(raw)) return `#${raw}`.toLowerCase();
+  return null;
 }
 
 function Check({ light }: { light: boolean }) {
@@ -42,6 +68,10 @@ export default function DesignLab() {
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [state, setState] = useState<State>({ ...DEFAULTS });
+  /** Last custom colour per group, so the custom swatch keeps its colour when a preset is picked. */
+  const [custom, setCustom] = useState<Record<ColorGroup, string>>({ title: '#2e6b58', accent: '#2e6b58', bg: '#eef2ee' });
+  /** What the hex field currently shows per group (may be an incomplete value while typing). */
+  const [drafts, setDrafts] = useState<Partial<Record<ColorGroup, string>>>({});
   const [copied, setCopied] = useState(false);
   const fabRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -49,7 +79,13 @@ export default function DesignLab() {
   const wasOpen = useRef(false);
 
   useEffect(() => {
-    setState(readFromDom());
+    const s = readFromDom();
+    setState(s);
+    setCustom((c) => {
+      const next = { ...c };
+      for (const g of Object.keys(COLOR_LISTS) as ColorGroup[]) if (isCustomColor(s[g])) next[g] = s[g];
+      return next;
+    });
     setMounted(true);
   }, []);
 
@@ -59,12 +95,20 @@ export default function DesignLab() {
     const root = document.documentElement;
     const diff: Partial<State> = {};
     for (const k of KEYS) {
-      if (next[k] === DEFAULTS[k]) root.removeAttribute(`data-${k}`);
-      else {
-        root.setAttribute(`data-${k}`, next[k]);
-        diff[k] = next[k];
+      const v = next[k];
+      const cssVar = cssVarOf(k);
+      if (cssVar) root.style.removeProperty(cssVar);
+      if (v === DEFAULTS[k]) {
+        root.removeAttribute(`data-${k}`);
+        continue;
       }
+      if (cssVar && isCustomColor(v)) {
+        root.setAttribute(`data-${k}`, 'custom');
+        root.style.setProperty(cssVar, v);
+      } else root.setAttribute(`data-${k}`, v);
+      diff[k] = v;
     }
+    if (!root.getAttribute('style')) root.removeAttribute('style');
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(diff));
     } catch {}
@@ -82,9 +126,16 @@ export default function DesignLab() {
     persist(next);
   };
 
+  const chooseCustom = (group: ColorGroup, hex: string) => {
+    setCustom((c) => ({ ...c, [group]: hex }));
+    setDrafts((d) => ({ ...d, [group]: undefined }));
+    choose(group, hex);
+  };
+
   const reset = () => {
     const next = { ...DEFAULTS };
     setState(next);
+    setDrafts({});
     persist(next);
   };
 
@@ -176,26 +227,98 @@ export default function DesignLab() {
     </div>
   );
 
-  const swatches = (group: 'accent' | 'bg', list: typeof accents) => (
-    <div className={styles.swatches} role="radiogroup" aria-labelledby={`lab-label-${group}`}>
-      {list.map((o) => (
-        <button
-          key={o.id}
-          type="button"
-          role="radio"
-          aria-checked={state[group] === o.id}
-          aria-label={o.label}
-          title={`${o.label} · ${o.note}`}
-          className={styles.swatch}
-          data-active={state[group] === o.id}
-          style={{ backgroundColor: o.hex }}
-          onClick={() => choose(group, o.id)}
-        >
-          {state[group] === o.id && <Check light={isLight(o.hex)} />}
-        </button>
-      ))}
-    </div>
-  );
+  /** Hex of the active choice of a colour group, for the hint after the section title. */
+  const activeHex = (group: ColorGroup) => {
+    const v = state[group];
+    if (isCustomColor(v)) return v.toUpperCase();
+    return (COLOR_LISTS[group].find((o) => o.id === v)?.hex ?? '').toUpperCase();
+  };
+
+  const colorSection = (group: ColorGroup, title: string) => {
+    const list = COLOR_LISTS[group];
+    const isCustom = isCustomColor(state[group]);
+    const customHex = custom[group];
+    const draft = drafts[group] ?? (isCustom ? state[group].toUpperCase() : '');
+    const draftValid = draft === '' || normalizeHex(draft) !== null;
+    return (
+      <section className={styles.section}>
+        <h3 className={styles.label} id={`lab-label-${group}`}>
+          {title}
+          <span className={styles.labelHex} aria-label="Aktueller Farbwert">
+            {activeHex(group)}
+          </span>
+        </h3>
+        <div className={styles.swatches} role="radiogroup" aria-labelledby={`lab-label-${group}`}>
+          {list.map((o) => (
+            <button
+              key={o.id}
+              type="button"
+              role="radio"
+              aria-checked={state[group] === o.id}
+              aria-label={o.label}
+              title={`${o.label} · ${o.hex} · ${o.note}`}
+              className={styles.swatch}
+              data-active={state[group] === o.id}
+              style={{ backgroundColor: o.hex }}
+              onClick={() => choose(group, o.id)}
+            >
+              {state[group] === o.id && <Check light={isLight(o.hex)} />}
+            </button>
+          ))}
+          <label
+            className={`${styles.swatch} ${styles.swatchCustom}`}
+            data-active={isCustom}
+            title="Eigene Farbe wählen"
+            style={{ backgroundColor: customHex }}
+          >
+            <input
+              type="color"
+              className={styles.colorInput}
+              value={customHex}
+              aria-label="Eigene Farbe wählen"
+              onChange={(e) => chooseCustom(group, e.target.value)}
+            />
+            {isCustom ? (
+              <Check light={isLight(customHex)} />
+            ) : (
+              <svg className={styles.plus} width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            )}
+          </label>
+        </div>
+        <div className={styles.customRow}>
+          <span className={styles.customLabel}>Eigene Farbe</span>
+          <input
+            type="text"
+            className={styles.hexInput}
+            data-invalid={!draftValid}
+            value={draft}
+            placeholder="#004225"
+            inputMode="text"
+            autoComplete="off"
+            spellCheck={false}
+            maxLength={7}
+            aria-label={`${title}: eigener Farbwert als Hex`}
+            onChange={(e) => {
+              const v = e.target.value;
+              setDrafts((d) => ({ ...d, [group]: v }));
+              const hex = normalizeHex(v);
+              if (hex && v.replace(/^#/, '').length === 6) chooseCustom(group, hex);
+            }}
+            onBlur={() => {
+              const hex = normalizeHex(draft);
+              if (hex) chooseCustom(group, hex);
+              else setDrafts((d) => ({ ...d, [group]: undefined }));
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+            }}
+          />
+        </div>
+      </section>
+    );
+  };
 
   return (
     <div className={styles.root}>
@@ -241,7 +364,12 @@ export default function DesignLab() {
                 >
                   <span className={styles.logoStage}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={o.dark} alt="" height={28} style={{ aspectRatio: String(o.ratio) }} />
+                    <img
+                      src={o.dark}
+                      alt=""
+                      height={28}
+                      style={{ aspectRatio: String(o.ratio), height: o.scale ? 26 * o.scale : undefined }}
+                    />
                   </span>
                   <span className={styles.logoLabel}>{o.label}</span>
                   <span className={styles.logoNote}>{o.note}</span>
@@ -260,14 +388,43 @@ export default function DesignLab() {
             {chips('body', bodyFonts)}
           </section>
 
-          <section className={styles.section}>
-            <h3 className={styles.label} id="lab-label-accent">Akzentfarbe</h3>
-            {swatches('accent', accents)}
-          </section>
+          {colorSection('title', 'Titelfarbe')}
+          {colorSection('accent', 'Akzentfarbe')}
+          {colorSection('bg', 'Hintergrund')}
 
           <section className={styles.section}>
-            <h3 className={styles.label} id="lab-label-bg">Hintergrund</h3>
-            {swatches('bg', backgrounds)}
+            <h3 className={styles.label} id="lab-label-image">Titelbild</h3>
+            <div className={styles.logos} role="radiogroup" aria-labelledby="lab-label-image">
+              {photos.map((o) => (
+                <button
+                  key={o.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={state.image === o.id}
+                  className={styles.logoCard}
+                  data-active={state.image === o.id}
+                  onClick={() => choose('image', o.id)}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img className={styles.photoThumb} src={o.thumb} alt="" width={400} height={267} loading="lazy" />
+                  <span className={styles.logoLabel}>{o.label}</span>
+                  <span className={styles.logoNote}>{o.note}</span>
+                </button>
+              ))}
+            </div>
+            <p className={styles.credits}>
+              Fotos:{' '}
+              {photos
+                .filter((o) => o.credit)
+                .map((o, index) => (
+                  <span key={o.id}>
+                    {index > 0 && ' · '}
+                    <a href={o.source} target="_blank" rel="noreferrer">
+                      {o.credit}
+                    </a>
+                  </span>
+                ))}
+            </p>
           </section>
         </div>
 

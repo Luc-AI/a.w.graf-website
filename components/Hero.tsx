@@ -1,4 +1,5 @@
 import { hero } from '@/content';
+import { LabPhotos } from './LabPhotos';
 import styles from './Hero.module.css';
 
 const webpSrcSet =
@@ -44,8 +45,10 @@ export function Hero() {
             alt={hero.imageAlt}
             fetchPriority="high"
             decoding="async"
+            data-default-photo=""
           />
         </picture>
+        <LabPhotos className={styles.image} />
       </div>
     </>
   );

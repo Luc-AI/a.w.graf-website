@@ -185,3 +185,32 @@ test('the footer reaches the bottom of the window on short pages', async ({ page
   const footer = (await page.locator('footer').boundingBox())!;
   expect(footer.y + footer.height).toBe(1000);
 });
+
+test.describe('Design Lab hero photo', () => {
+  for (const path of ['/design-1', '/design-2']) {
+    test(`link choice replaces the hero on ${path}`, async ({ page }) => {
+      await page.goto(`${path}?image=m2`, { waitUntil: 'networkidle' });
+      const photo = page.locator('img[data-photo="m2"]');
+      await expect(photo).toBeVisible();
+      await expect.poll(() => photo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+      await expect(page.locator('img[data-default-photo]')).toBeHidden();
+      await expect(page.locator('img[data-photo="m1"]')).toBeHidden();
+    });
+
+    test(`default hero stays and alternatives are not downloaded on ${path}`, async ({ page }) => {
+      const requested: string[] = [];
+      page.on('request', (request) => requested.push(request.url()));
+      await page.goto(`${path}?lab=off`, { waitUntil: 'networkidle' });
+      await expect(page.locator('img[data-default-photo]')).toBeVisible();
+      expect(requested.filter((url) => url.includes('/images/lab/'))).toEqual([]);
+    });
+  }
+
+  test('the panel row switches the hero', async ({ page }) => {
+    await page.goto('/design-1', { waitUntil: 'networkidle' });
+    await page.getByRole('button', { name: 'Gestaltung anpassen' }).click();
+    await page.getByRole('radio', { name: /Betonhaus/ }).click();
+    await expect(page.locator('img[data-photo="m1"]')).toBeVisible();
+    await expect(page).toHaveURL(/image=m1/);
+  });
+});

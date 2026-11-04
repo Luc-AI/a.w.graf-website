@@ -8,6 +8,7 @@
   font-stretch: var(--heading-stretch, 100%);
   text-transform: var(--heading-transform, none);
   font-weight: var(--heading-weight, 400);
+  color: var(--heading-color, currentColor);
   font-size: calc(clamp(40px, 6.4vw, 80px) * var(--heading-scale, 1));
   line-height: 1.05;
   letter-spacing: var(--heading-tracking, -0.015em);
