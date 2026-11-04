@@ -68,4 +68,8 @@
   .grid {
     row-gap: 24px;
   }
+
+  .intro {
+    max-width: none;
+  }
 }

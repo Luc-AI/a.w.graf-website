@@ -151,6 +151,15 @@ section[id] {
     row-gap: 24px;
   }
 
+  /* Phones: a line only breaks when the next word no longer fits (both designs). */
+  body * {
+    text-wrap: wrap !important;
+  }
+
+  .h2-narrow {
+    max-width: none;
+  }
+
   section[id] {
     scroll-margin-top: 72px;
   }

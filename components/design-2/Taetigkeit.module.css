@@ -41,12 +41,22 @@
 }
 
 @media (max-width: 767px) {
+  /* The tiles start on the text line and keep their distance from the screen edge. */
   .section {
     gap: 28px;
+    padding-inline: var(--pad-64);
+  }
+
+  .head {
+    padding-inline: 0;
   }
 
   .tiles {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 12px;
+  }
+
+  .tile {
+    padding: 28px 20px;
   }
 }

@@ -68,7 +68,7 @@ test.describe('spot checks at 390', () => {
     await loadReady(page, PATH);
     const logo = (await page.locator('header img[src*="logo"]').boundingBox())!;
     expect([Math.round(logo.x), logo.y, Math.round(logo.width), logo.height]).toEqual([17, 20, 149, 40]);
-    expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(3511);
+    expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(3576);
   });
 });
 
