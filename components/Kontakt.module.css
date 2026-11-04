@@ -5,7 +5,8 @@
 }
 
 .inner {
-  padding-block: var(--section-y);
+  padding-top: var(--section-y);
+  padding-bottom: 80px; /* Up to the footer's rule, as in Design 3. */
 }
 
 .body {
@@ -42,6 +43,12 @@
 /* The accent underline would vanish on the accent surface. */
 .kontakt a:hover {
   text-decoration-color: currentColor;
+}
+
+@media (max-width: 899px) {
+  .inner {
+    padding-bottom: 56px;
+  }
 }
 
 @media (max-width: 767px) {

@@ -1,16 +1,21 @@
 .band {
-  background: var(--ink);
+  background: var(--accent);
 }
 
+/* Same footer as Design 3. On the legal pages it stands alone, so it has no rule on top. */
 .footer {
-  padding-top: 28px;
-  padding-bottom: 36px;
+  padding-block: 40px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 12px 32px;
+  gap: 12px 24px;
   font-size: 14px;
   color: var(--on-dark-60);
+}
+
+/* On the home page it continues the Kontakt block, which ends in the same colour. */
+:global(main:has(#kontakt)) + .band .footer {
+  border-top: 1px solid rgba(246, 243, 236, 0.2);
+  padding-top: 24px;
 }
 
 .links {
@@ -20,4 +25,11 @@
 
 .link {
   text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .footer {
+    flex-direction: column;
+    padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  }
 }

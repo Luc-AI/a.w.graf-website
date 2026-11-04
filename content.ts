@@ -101,7 +101,8 @@ export const kontakt = {
 };
 
 export const footer = {
-  copyright: '© A.W. Graf AG · Immobilienbewirtschaftung und Entwicklung · Illnau',
+  copyright: '© A.W. Graf AG · Illnau',
+  label: 'Rechtliches',
   links: [
     { href: '/impressum', label: 'Impressum' },
     { href: '/datenschutz', label: 'Datenschutz' },

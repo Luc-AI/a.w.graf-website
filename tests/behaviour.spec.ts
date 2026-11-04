@@ -31,7 +31,7 @@ test.describe('measurements at 1440', () => {
     expect(Math.round(hero!.y)).toBe(567);
     expect(Math.round(hero!.height)).toBe(619);
     const height = await page.evaluate(() => document.documentElement.scrollHeight);
-    expect(height).toBe(4251);
+    expect(height).toBe(4192);
     await expect(page.locator('h1')).toHaveCount(1);
   });
 });
@@ -45,7 +45,7 @@ test.describe('measurements at 390', () => {
     expect(Math.round(logo!.width)).toBe(149);
     expect(logo!.height).toBe(40);
     const height = await page.evaluate(() => document.documentElement.scrollHeight);
-    expect(height).toBe(3344);
+    expect(height).toBe(3307);
     const wrap = await page.locator('header').boundingBox();
     expect(wrap!.height).toBe(76); // plus the 1px border on the wrapper = 77
   });
@@ -219,5 +219,22 @@ test.describe('Design Lab hero photo', () => {
     await page.getByRole('radio', { name: /Betonhaus/ }).click();
     await expect(page.locator('img[data-photo="m1"]')).toBeVisible();
     await expect(page).toHaveURL(/image=m1/);
+  });
+});
+
+test.describe('footer', () => {
+  test('continues the Kontakt block in the Design Lab accent, with a rule on top', async ({ page }) => {
+    await page.goto('/design-1?accent=forest', { waitUntil: 'networkidle' });
+    await expect(page.locator('#kontakt')).toHaveCSS('background-color', 'rgb(0, 66, 37)');
+    await expect(page.locator('footer')).toHaveCSS('background-color', 'rgb(0, 66, 37)');
+    await expect(page.locator('footer')).toContainText('© A.W. Graf AG · Illnau');
+    await expect(page.locator('footer nav')).toHaveAttribute('aria-label', 'Rechtliches');
+    const rule = page.locator('footer > div > div');
+    await expect(rule).toHaveCSS('border-top-width', '1px');
+  });
+
+  test('stands alone on the legal pages, without the rule', async ({ page }) => {
+    await page.goto('/impressum?lab=off', { waitUntil: 'networkidle' });
+    await expect(page.locator('footer > div > div')).toHaveCSS('border-top-width', '0px');
   });
 });
