@@ -1,5 +1,7 @@
 # Handover: A.W. Graf AG website, variant 2d "Index-Kacheln"
 
+> **Status:** the site has since been deliberately restyled (type scale, mobile spacing, shared left edge, Kontakt link instead of the burger from 768px, phone crop of the hero). The values below describe the original design. For the current look, the code and the updated baselines in `screenshots/` are the source of truth; `screenshots/original-artboard-1280.png` stays as the record of the design as drawn and is no longer tested against.
+
 You are implementing a finished design: a one-pager with a full-height photo hero, a centered intro, two content tiles, three values, and a dark team/contact block. Goal: near pixel-perfect at desktop, fully mobile friendly. Do not redesign, change copy or add sections.
 
 ## 1. Sources of truth

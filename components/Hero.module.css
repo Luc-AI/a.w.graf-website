@@ -8,10 +8,11 @@
   font-stretch: var(--heading-stretch, 100%);
   text-transform: var(--heading-transform, none);
   font-weight: var(--heading-weight, 400);
-  font-size: calc(clamp(46px, 7.2vw, 92px) * var(--heading-scale, 1));
-  line-height: 1.02;
+  font-size: calc(clamp(40px, 6.4vw, 80px) * var(--heading-scale, 1));
+  line-height: 1.05;
   letter-spacing: var(--heading-tracking, -0.015em);
   margin: 0 0 40px;
+  text-wrap: balance;
 }
 
 .grid {
@@ -54,4 +55,23 @@
   aspect-ratio: 16 / 9;
   object-fit: cover;
   background: var(--placeholder);
+}
+
+@media (max-width: 767px) {
+  .hero {
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .title {
+    margin-bottom: 20px;
+  }
+
+  .grid {
+    row-gap: 24px;
+  }
+
+  .intro {
+    max-width: none;
+  }
 }

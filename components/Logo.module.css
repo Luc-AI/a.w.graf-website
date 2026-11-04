@@ -9,6 +9,11 @@
   width: auto;
 }
 
+/* The current PNG has transparent padding on the left; this puts the wordmark on the text line. */
+.img[data-variant='current'] {
+  transform: translateX(-4.911%);
+}
+
 /* Default variant, unless another one is chosen. */
 :global(html:not([data-logo])) .img[data-variant='current'],
 :global(html[data-logo='current']) .img[data-variant='current'] {

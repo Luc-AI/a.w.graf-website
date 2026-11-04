@@ -10,13 +10,14 @@
   --on-dark-60: rgba(246, 243, 236, 0.6);
 
   /* type */
+  --text-body: 17px;
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-serif: var(--font-newsreader), Georgia, serif;
 
   /* layout */
   --container: 1228px;
   --gutter: clamp(24px, 5vw, 64px);
-  --section-y: clamp(112px, 14vw, 140px);
+  --section-y: clamp(72px, 11vw, 140px);
 }
 
 * {
@@ -30,7 +31,7 @@ html {
 
 body {
   margin: 0;
-  font: 400 18px/1.6 var(--font-sans);
+  font: 400 var(--text-body)/1.6 var(--font-sans);
   color: var(--ink);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
@@ -63,6 +64,18 @@ section[id] {
 
 /* Shared layout primitives */
 
+/* Keeps the dark footer at the bottom of the window on short pages. */
+.site-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+.site-shell > main {
+  flex: 1;
+  min-width: 0;
+}
+
 .container {
   max-width: var(--container);
   margin-inline: auto;
@@ -74,10 +87,11 @@ section[id] {
   font-stretch: var(--heading-stretch, 100%);
   text-transform: var(--heading-transform, none);
   font-weight: var(--heading-weight, 400);
-  font-size: calc(clamp(34px, 4vw, 48px) * var(--heading-scale, 1));
+  font-size: calc(clamp(30px, 3.6vw, 44px) * var(--heading-scale, 1));
   line-height: 1.1;
   letter-spacing: var(--heading-tracking, -0.01em);
   margin: 0;
+  text-wrap: balance;
 }
 
 .h2-narrow {
@@ -125,7 +139,31 @@ section[id] {
   inset: calc(50% - 22px) 0;
 }
 
+/* Below this width .two-col is stacked: white space separates the sections, not lines. */
+@media (max-width: 870px) {
+  .divider {
+    display: none;
+  }
+}
+
 @media (max-width: 767px) {
+  :root {
+    --text-body: 16px;
+  }
+
+  .two-col {
+    row-gap: 24px;
+  }
+
+  /* Phones: a line only breaks when the next word no longer fits (both designs). */
+  body * {
+    text-wrap: wrap !important;
+  }
+
+  .h2-narrow {
+    max-width: none;
+  }
+
   section[id] {
     scroll-margin-top: 72px;
   }

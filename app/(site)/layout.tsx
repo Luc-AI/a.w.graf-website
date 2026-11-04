@@ -20,7 +20,7 @@ const jsonLd = {
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
-    <>
+    <div className="site-shell">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -28,6 +28,6 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       <Header />
       <main>{children}</main>
       <Footer />
-    </>
+    </div>
   );
 }

@@ -2,14 +2,14 @@
   padding: 0 var(--frame) var(--sec-y);
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 40px;
 }
 
 .head {
   padding: 0 calc(var(--pad-64) - var(--frame));
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .tiles {
@@ -20,10 +20,11 @@
 
 .tile {
   background: var(--tile);
-  padding: clamp(40px, 5vw, 64px) clamp(24px, 4.375vw, 56px);
+  /* Inline padding puts the tile text on the same line as the section heading. */
+  padding: clamp(32px, 5vw, 56px) calc(var(--pad-64) - var(--frame));
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 }
 
 .tileTitle {
@@ -32,8 +33,8 @@
   text-transform: var(--heading-transform, none);
   letter-spacing: var(--heading-tracking, normal);
   font-weight: var(--heading-weight, 400);
-  font-size: calc(clamp(30px, 3.125vw, 40px) * var(--heading-scale, 1));
-  line-height: 1.6;
+  font-size: calc(clamp(24px, 2.5vw, 32px) * var(--heading-scale, 1));
+  line-height: 1.2;
   margin: 0;
 }
 
@@ -43,8 +44,14 @@
 }
 
 @media (max-width: 767px) {
+  /* The tiles start on the text line and keep their distance from the screen edge. */
   .section {
-    gap: 36px;
+    gap: 28px;
+    padding-inline: var(--pad-64);
+  }
+
+  .head {
+    padding-inline: 0;
   }
 
   .tiles {
@@ -52,7 +59,7 @@
     gap: 12px;
   }
 
-  .tileTitle {
-    line-height: 1.2;
+  .tile {
+    padding: 28px 20px;
   }
 }

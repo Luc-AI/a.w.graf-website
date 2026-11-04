@@ -29,12 +29,20 @@ export function SiteHeader() {
       }
     }
 
+    /* The burger only exists on phones, so a menu left open would have no way to close. */
+    const desktop = window.matchMedia('(min-width: 768px)');
+    const closeOnDesktop = () => {
+      if (desktop.matches) setOpen(false);
+    };
+
     document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', onKeyDown);
+    desktop.addEventListener('change', closeOnDesktop);
     focusable[1].focus({ preventScroll: true });
     return () => {
       document.body.style.overflow = '';
       document.removeEventListener('keydown', onKeyDown);
+      desktop.removeEventListener('change', closeOnDesktop);
       burger.focus({ preventScroll: true });
     };
   }, [open]);
@@ -74,7 +82,7 @@ export function SiteHeader() {
         aria-label={nav.menuLabel}
       >
         <ul className={styles.menuList}>
-          {nav.menuLinks.map((link) => (
+          {nav.links.map((link) => (
             <li key={link.href}>
               <a className={styles.menuLink} href={link.href} onClick={() => setOpen(false)}>
                 {link.label}

@@ -21,15 +21,17 @@ test.describe('measurements at 1440', () => {
   test('match the spec', async ({ page }) => {
     await loadReady(page);
     const logo = await page.locator('header img').first().boundingBox();
-    expect(logo).toEqual({ x: 170, y: 32, width: 224, height: 60 });
+    // The box starts 11px left of the text line: the PNG has transparent padding on the left.
+    expect(Math.round(logo!.x)).toBe(159);
+    expect(logo).toMatchObject({ y: 32, width: 224, height: 60 });
     const h1 = await page.locator('h1').boundingBox();
     expect(h1?.y).toBe(265);
     const hero = await page.locator('main img').first().boundingBox();
     expect(hero).toMatchObject({ x: 170, width: 1100 });
-    expect(Math.round(hero!.y)).toBe(581);
+    expect(Math.round(hero!.y)).toBe(567);
     expect(Math.round(hero!.height)).toBe(619);
     const height = await page.evaluate(() => document.documentElement.scrollHeight);
-    expect(height).toBe(4314);
+    expect(height).toBe(4251);
     await expect(page.locator('h1')).toHaveCount(1);
   });
 });
@@ -40,12 +42,12 @@ test.describe('measurements at 390', () => {
   test('match the spec', async ({ page }) => {
     await loadReady(page);
     const logo = await page.locator('header img').first().boundingBox();
-    expect(Math.round(logo!.width)).toBe(164);
-    expect(logo!.height).toBe(44);
+    expect(Math.round(logo!.width)).toBe(149);
+    expect(logo!.height).toBe(40);
     const height = await page.evaluate(() => document.documentElement.scrollHeight);
-    expect(height).toBe(4648);
+    expect(height).toBe(3344);
     const wrap = await page.locator('header').boundingBox();
-    expect(wrap!.height).toBe(84); // plus the 1px border on the wrapper = 85
+    expect(wrap!.height).toBe(76); // plus the 1px border on the wrapper = 77
   });
 });
 
@@ -175,4 +177,11 @@ test.describe('anchors and stubs', () => {
     await loadReady(page);
     expect(external).toEqual([]);
   });
+});
+
+test('the footer reaches the bottom of the window on short pages', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 1000 });
+  await page.goto('/impressum');
+  const footer = (await page.locator('footer').boundingBox())!;
+  expect(footer.y + footer.height).toBe(1000);
 });
