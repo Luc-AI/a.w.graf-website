@@ -1,3 +1,10 @@
 .werte {
   padding-bottom: var(--section-y);
 }
+
+/* The divider is hidden here and Team brings its own top padding. */
+@media (max-width: 870px) {
+  .werte {
+    padding-bottom: 0;
+  }
+}

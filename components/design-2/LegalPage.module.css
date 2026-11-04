@@ -6,7 +6,7 @@
 
 .header {
   width: 100%;
-  padding: 28px var(--pad-44);
+  padding: 28px var(--pad-64);
 }
 
 .logo {
@@ -17,12 +17,14 @@
   height: 44px;
   width: auto;
   display: block;
+  /* The PNG has transparent padding on the left; this puts the wordmark on the text line. */
+  transform: translateX(-4.911%);
 }
 
 .main {
   flex: 1;
   width: 100%;
-  padding: var(--sec-y) var(--pad-44);
+  padding: var(--sec-y) var(--pad-64);
 }
 
 .body {

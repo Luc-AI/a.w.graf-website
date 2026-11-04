@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   z-index: 30;
-  padding: 28px var(--pad-44);
+  padding: 28px var(--pad-64);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,6 +21,8 @@
   height: 56px;
   width: auto;
   display: block;
+  /* The PNG has transparent padding on the left; this puts the wordmark on the text line. */
+  transform: translateX(-4.911%);
 }
 
 .nav {
@@ -90,7 +92,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: calc(56px + 2 * 28px + 40px) var(--pad-44) calc(40px + env(safe-area-inset-bottom));
+  padding: calc(56px + 2 * 28px + 40px) var(--pad-64) calc(40px + env(safe-area-inset-bottom));
   overflow-y: auto;
   opacity: 0;
   visibility: hidden;
@@ -114,7 +116,7 @@
   display: block;
   padding: 8px 0;
   font-family: var(--serif);
-  font-size: clamp(40px, 4.375vw, 56px);
+  font-size: 30px;
   line-height: 1.1;
   letter-spacing: -0.01em;
 }
@@ -123,8 +125,14 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 15px;
-  color: var(--on-dark-65);
+  font-size: 14px;
+  color: var(--on-dark-60);
+}
+
+@media (min-width: 768px) {
+  .burger {
+    display: none;
+  }
 }
 
 @media (max-width: 767px) {

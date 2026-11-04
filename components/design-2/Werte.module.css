@@ -2,13 +2,13 @@
   padding: 0 var(--pad-64) var(--sec-y);
   display: flex;
   flex-direction: column;
-  gap: 56px;
+  gap: 40px;
 }
 
 .head {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .list {
@@ -21,11 +21,11 @@
 }
 
 .item {
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--rule);
   padding-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .label {
@@ -34,11 +34,17 @@
 
 @media (max-width: 899px) {
   .section {
-    gap: 40px;
+    gap: 28px;
   }
 
   .list {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 20px;
+  }
+
+  /* Stacked: lines only between items. */
+  .item:first-child {
+    border-top: 0;
+    padding-top: 0;
   }
 }

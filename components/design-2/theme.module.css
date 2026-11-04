@@ -1,5 +1,4 @@
-/* Tokens and base styles of Design 2. Scoped, so Design 1 stays untouched.
-   The clamp values map exactly to the artboard at 1280; don't round them. */
+/* Tokens and base styles of Design 2. Scoped, so Design 1 stays untouched. */
 .theme {
   --bg: #f6f3ec;
   --tile: #ece7dc;
@@ -7,18 +6,19 @@
   --on-dark: #f6f3ec;
   --hero-fallback: #2a2a27;
   --on-dark-60: rgba(246, 243, 236, 0.6);
-  --on-dark-65: rgba(246, 243, 236, 0.65);
   --on-dark-rule: rgba(246, 243, 236, 0.12);
+  --rule: rgba(23, 23, 21, 0.15);
   --sans: var(--font-inter), system-ui, sans-serif;
   --serif: var(--font-newsreader), Georgia, serif;
 
   --max: 1280px;
-  --sec-y: clamp(88px, 10.9375vw, 140px);
+  --sec-y: clamp(72px, 10.9375vw, 140px);
   --pad-64: clamp(24px, 5vw, 64px);
-  --pad-44: clamp(24px, 3.4375vw, 44px);
   --frame: clamp(12px, 1.5625vw, 20px);
 
-  font: 400 17px/1.6 var(--sans);
+  --text-body: 17px;
+
+  font: 400 var(--text-body)/1.6 var(--sans);
   background: var(--bg);
   color: var(--ink);
 }
@@ -51,21 +51,29 @@
 
 .eyebrow {
   font-size: 13px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  text-wrap: balance;
 }
 
-/* The 1.6 line-height is inherited in the design and sets the vertical rhythm. */
 .h2 {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(36px, 4.0625vw, 52px);
-  line-height: 1.6;
+  font-size: clamp(30px, 3.6vw, 44px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   margin: 0;
+  text-wrap: balance;
 }
 
+/* Phones: everything runs edge to edge on one 24px text line. */
 @media (max-width: 767px) {
-  .h2 {
-    line-height: 1.2;
+  .theme {
+    --text-body: 16px;
+    --frame: 0px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
   }
 }

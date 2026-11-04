@@ -25,7 +25,7 @@ for (const v of viewports) {
       await expect(page).toHaveScreenshot(`${v.name}-fold.png`, options);
     });
 
-    if (v.width < 1000) {
+    if (v.width < 768) {
       test('menu open', async ({ page }) => {
         await loadReady(page, PATH);
         await page.getByRole('button', { name: 'Menü öffnen' }).click();
@@ -34,15 +34,6 @@ for (const v of viewports) {
     }
   });
 }
-
-test.describe('the design itself', () => {
-  test.use({ viewport: { width: 1280, height: 900 } });
-
-  test('matches the original artboard at 1280', async ({ page }) => {
-    await loadReady(page, PATH);
-    await expect(page).toHaveScreenshot('original-artboard-1280.png', { ...options, fullPage: true });
-  });
-});
 
 for (const width of [320, 360, 375, 390, 414, 600, 768, 900, 1024, 1100, 1280, 1440, 1920]) {
   test(`no horizontal overflow at ${width}px`, async ({ page }) => {
@@ -62,10 +53,10 @@ test.describe('spot checks at 1280', () => {
   test('match the spec', async ({ page }) => {
     await loadReady(page, PATH);
     const logo = (await page.locator('header img[src*="logo"]').boundingBox())!;
-    expect([logo.x, logo.y, Math.round(logo.width), logo.height]).toEqual([44, 28, 209, 56]);
-    expect(Math.round((await page.locator('h1').boundingBox())!.y)).toBe(493);
+    expect([Math.round(logo.x), logo.y, Math.round(logo.width), logo.height]).toEqual([54, 28, 209, 56]);
+    expect(Math.round((await page.locator('h1').boundingBox())!.y)).toBe(552);
     expect((await page.locator('header#top').boundingBox())!.height).toBe(800);
-    expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(3323);
+    expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(3091);
     await expect(page.locator('h1')).toHaveCount(1);
   });
 });
@@ -76,8 +67,8 @@ test.describe('spot checks at 390', () => {
   test('match the spec', async ({ page }) => {
     await loadReady(page, PATH);
     const logo = (await page.locator('header img[src*="logo"]').boundingBox())!;
-    expect([logo.x, logo.y, Math.round(logo.width), logo.height]).toEqual([24, 20, 149, 40]);
-    expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(4113);
+    expect([Math.round(logo.x), logo.y, Math.round(logo.width), logo.height]).toEqual([17, 20, 149, 40]);
+    expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(3511);
   });
 });
 
@@ -119,6 +110,15 @@ test.describe('menu', () => {
     await page.getByRole('button', { name: 'Menü öffnen' }).click();
     await expect(page.locator('#menu a').first()).toBeFocused();
     await context.close();
+  });
+
+  test('closes when the window grows past the phone breakpoint', async ({ page }) => {
+    await loadReady(page, PATH);
+    await page.getByRole('button', { name: 'Menü öffnen' }).click();
+    await page.setViewportSize({ width: 1024, height: 844 });
+    await expect(page.locator('#menu')).toBeHidden();
+    await expect(page.locator('body')).not.toHaveCSS('overflow-y', 'hidden');
+    await expect(page.locator('header nav a', { hasText: 'Kontakt' })).toBeVisible();
   });
 
   test('a link closes it and scrolls to the section', async ({ page }) => {

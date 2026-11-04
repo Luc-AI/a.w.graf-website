@@ -1,5 +1,7 @@
 # Handover: A.W. Graf AG website (one-pager)
 
+> **Status:** the site has since been deliberately restyled (type scale, mobile spacing, fewer hairlines). The values below describe the original design. For the current look, the code and the updated baselines in `reference/screenshots/` are the source of truth.
+
 You are implementing a finished design. The goal is a near pixel-perfect build of the design that is fully mobile friendly. Do not redesign, "improve" spacing, change copy or add sections.
 
 ## 1. Sources of truth (read in this order)

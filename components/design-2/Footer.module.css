@@ -1,11 +1,11 @@
 .footer {
-  padding: 40px var(--pad-44);
+  padding: 40px var(--pad-64);
   border-top: 1px solid var(--on-dark-rule);
   display: flex;
   justify-content: space-between;
   gap: 24px;
   font-size: 14px;
-  color: var(--on-dark-65);
+  color: var(--on-dark-60);
 }
 
 .links {
@@ -15,8 +15,8 @@
 
 @media (max-width: 767px) {
   .footer {
-    flex-direction: column;
-    gap: 12px;
-    padding: 32px 24px calc(32px + env(safe-area-inset-bottom));
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    padding: 24px 24px calc(32px + env(safe-area-inset-bottom));
   }
 }

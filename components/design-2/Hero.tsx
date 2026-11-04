@@ -7,14 +7,20 @@ const { hero } = designTwo;
 const srcSet = (ext: string) =>
   [800, 1200, 1500].map((w) => `/images/hero-illnau-${w}.${ext} ${w}w`).join(', ');
 
-/* object-fit: cover at 4:3, so on tall viewports the height decides the rendered width.
-   Phones deliberately get less than that: the LCP budget matters more than the extra sharpness. */
+/* object-fit: cover at 4:3, so on tall viewports the height decides the rendered width. */
 const sizes = '(max-width: 767px) 100vw, max(100vw, min(133.34svh, 1067px))';
 
 export function Hero() {
   return (
     <header className={styles.hero} id="top">
       <picture>
+        {/* A phone shows only a narrow slice of the photo, so it gets that slice at full
+            resolution: 720x1125 from the original, sharper and lighter than a scaled-down file. */}
+        <source
+          media="(max-width: 480px)"
+          type="image/webp"
+          srcSet="/images/hero-illnau-phone-720.webp"
+        />
         <source type="image/webp" srcSet={srcSet('webp')} sizes={sizes} />
         <img
           className={styles.image}

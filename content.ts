@@ -136,12 +136,6 @@ export const designTwo = {
       { href: '#taetigkeit', label: 'Tätigkeit' },
       { href: '#werte', label: 'Werte' },
       { href: '#team', label: 'Team' },
-    ],
-    menuLinks: [
-      { href: '#ueber-uns', label: 'Über uns' },
-      { href: '#taetigkeit', label: 'Tätigkeit' },
-      { href: '#werte', label: 'Werte' },
-      { href: '#team', label: 'Team' },
       { href: '#kontakt', label: 'Kontakt' },
     ],
   },

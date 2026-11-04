@@ -35,6 +35,8 @@
   display: block;
   height: 60px;
   width: auto;
+  /* The PNG has transparent padding on the left; this puts the wordmark on the text line. */
+  transform: translateX(-4.911%);
   transition: height 0.3s ease;
 }
 
@@ -46,7 +48,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px 28px;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .navLink {
@@ -61,11 +63,11 @@
 @media (max-width: 767px) {
   .wrap .header {
     flex-wrap: nowrap;
-    padding: 20px 24px;
+    padding: 16px 24px;
   }
 
   .logo {
-    height: 44px;
+    height: 40px;
   }
 
   .wrap[data-scrolled] .header {
@@ -73,7 +75,7 @@
   }
 
   .wrap[data-scrolled] .logo {
-    height: 36px;
+    height: 32px;
   }
 
   .desktopNav {
@@ -88,7 +90,7 @@
     background: none;
     border: 0;
     font: inherit;
-    font-size: 17px;
+    font-size: 15px;
     color: inherit;
     cursor: pointer;
   }
@@ -127,8 +129,8 @@
     display: block;
     padding: 10px 0;
     font-family: var(--font-serif);
-    font-size: 34px;
-    line-height: 1.1;
+    font-size: 28px;
+    line-height: 1.15;
     letter-spacing: -0.01em;
     text-decoration: none;
   }
@@ -137,7 +139,7 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.6;
     color: var(--ink-60);
   }
